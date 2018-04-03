@@ -1,8 +1,8 @@
 <template>
-	<div class="index">
+	<div class='index'>
 		<VBanner></VBanner>
 		<!--<keep-alive>-->
-			<!--<component :is="current"></component>-->
+			<!--<component :is='current'></component>-->
 		<!--</keep-alive>-->
 	</div>
 </template>
@@ -35,7 +35,7 @@
 	}
 </script>
 
-<style lang="stylus" scoped>
+<style lang='stylus' scoped>
 	.index
 		display flex
 		position absolute

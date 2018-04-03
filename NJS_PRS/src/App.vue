@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
+      <router-view v-if='$route.meta.keepAlive'></router-view>
     </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <router-view v-if='!$route.meta.keepAlive'></router-view>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang='stylus' rel='stylesheet/stylus'>
   html, body, #app
     height 100%
 

@@ -9,6 +9,7 @@ import VueLazyload from 'vue-lazyload'
 import _ from 'lodash'
 import { routerMode } from './config/index'
 
+window._ = _
 Vue.use(components)
 Vue.use(plugins)
 Vue.use(VueLazyload, {

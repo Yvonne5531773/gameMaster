@@ -10,7 +10,7 @@ export default {
 		this.SET_COMPONENT({component: component})
 	},
 
-	fetch(path, data, type, method) {
+	fetch(path) {
 		const url = host + path
 		return worker.work(url)
 	},

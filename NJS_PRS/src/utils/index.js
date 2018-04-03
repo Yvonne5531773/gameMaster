@@ -96,11 +96,11 @@ export const getOperationFullTime = date => {
 export const getHost = url => {
 	if (!url) return ''
 	let arrUrl = []
-	arrUrl = !!~url.indexOf('//') && url.split('//')
+	arrUrl = ~url.indexOf('//') && url.split('//')
 	arrUrl = arrUrl.length > 1 ? arrUrl[1] : url
-	let end = !!~arrUrl.indexOf('/') ? arrUrl.indexOf('/') : arrUrl.length,
+	let end = ~arrUrl.indexOf('/') ? arrUrl.indexOf('/') : arrUrl.length,
 		relUrl = arrUrl.substring(0, end)
-	if (!!~relUrl.indexOf('?')) {
+	if (~relUrl.indexOf('?')) {
 		relUrl = relUrl.split('?')[0]
 	}
 	return relUrl

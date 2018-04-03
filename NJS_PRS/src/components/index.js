@@ -4,7 +4,7 @@ import txt from '../txt/index'
 import velocity from 'velocity-animate/velocity.min'
 import { websiteApi } from 'api'
 
-const install = function (Vue, config = {}) {
+const install = function (Vue) {
 	if (install.installed) return
 
 	Vue.component(VBanner.name, VBanner)

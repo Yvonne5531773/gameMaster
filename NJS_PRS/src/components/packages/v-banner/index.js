@@ -1,1 +1,1 @@
-export { default } from './src/VBanner.vue';
+export { default } from './src/VBanner.vue'
