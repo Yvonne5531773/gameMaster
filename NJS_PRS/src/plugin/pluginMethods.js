@@ -1,0 +1,23 @@
+import { mapMutations } from 'vuex'
+import { worker } from 'api/worker'
+import { host, categoryPath } from 'config/index'
+import { getOperationFullTime } from 'utils/index'
+
+export default {
+	...mapMutations(['SET_COMPONENT']),
+
+	setComponent(component) {
+		this.SET_COMPONENT({component: component})
+	},
+
+	fetch(path, data, type, method) {
+		const url = host + path
+		return worker.work(url)
+	},
+
+	addHttp(url) {
+		if(url){
+			return !~url.indexOf('http')? 'http:'+url : url
+		}
+	}
+}

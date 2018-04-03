@@ -1,0 +1,56 @@
+<template>
+	<div class="index">
+		<VBanner></VBanner>
+		<!--<keep-alive>-->
+			<!--<component :is="current"></component>-->
+		<!--</keep-alive>-->
+	</div>
+</template>
+<script>
+	import { mapState } from 'vuex'
+	import { prePage } from 'config/index'
+	import { getStore, removeStore } from 'utils/index'
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		watch: {
+			component () {
+				this.init()
+			},
+		},
+		mounted () {
+			this.init()
+		},
+		computed:{
+
+		},
+		methods: {
+			async init () {
+
+			},
+		},
+	}
+</script>
+
+<style lang="stylus" scoped>
+	.index
+		display flex
+		position absolute
+		margin 0
+		padding 0
+		border 0
+		width 100%
+		height 100%
+		-webkit-box-orient vertical
+		-webkit-box-direction normal
+		-ms-flex-direction column
+		flex-direction column
+		-webkit-box-align stretch
+		-ms-flex-align stretch
+		align-items stretch
+		-ms-flex-negative 0
+		flex-shrink 0
+</style>

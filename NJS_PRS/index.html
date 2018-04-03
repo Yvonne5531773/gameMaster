@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>游戏超人</title>
+    <meta charset="utf-8">
+    <meta name="referrer" content="no-referrer"/>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=format-detection content="telephone=no">
+    <meta name=format-detection content="email=no">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <meta name=full-screen content=yes>
+    <meta name=browsermode content=application>
+    <meta name=x5-orientation content=portrait>
+    <meta name=x5-fullscreen content=true>
+    <meta name=x5-page-mode content=app>
+    <!--清除缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <script>
+		  ((doc, win, undefined) => {
+			  var docEl = doc.documentElement,
+				  resizeEvt = 'orientationchange' in win? 'orientationchange' : 'resize',
+				  recalc = function () {
+					  var clientWidth = docEl.clientWidth;
+					  if (clientWidth === undefined) return;
+					  docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
+				  };
+			  if (doc.addEventListener === undefined) return;
+			  win.addEventListener(resizeEvt, recalc, false);
+			  doc.addEventListener('DOMContentLoaded', recalc, false)
+		  })(document, window)
+    </script>
+  </head>
+  <style>
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video, input {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      line-height: 1.5;
+      font-weight: normal;
+      vertical-align: baseline;
+      font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    }
+
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, menu, nav, section {
+      display: block;
+    }
+
+    body {
+      line-height: 1;
+    }
+
+    blockquote, q {
+      quotes: none;
+    }
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    /* custom */
+    a {
+      color: #7e8c8d;
+      text-decoration: none;
+      -webkit-backface-visibility: hidden;
+      cursor: pointer;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    body {
+      -webkit-text-size-adjust: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      margin: 0;
+      padding: 0;
+      background: #EDEFF1;
+    }
+
+    input::-webkit-input-placeholder {
+      color: #ffffff !important;
+    }
+
+    .Button {
+      display: inline-block;
+      padding: 0 16px;
+      font-size: 14px;
+      line-height: 32px;
+      color: #8590a6;
+      text-align: center;
+      cursor: pointer;
+      background: none;
+      border: 1px solid #ccd8e1;
+      border-radius: 3px;
+    }
+  </style>
+  <body>
+    <div id="app-box"></div>
+  </body>
+</html>
