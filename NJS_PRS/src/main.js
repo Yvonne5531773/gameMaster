@@ -7,6 +7,7 @@ import store from './store'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 import _ from 'lodash'
+import 'lib-flexible'
 import { routerMode } from './config/index'
 
 window._ = _

@@ -68,9 +68,9 @@
       height 100%
       -webkit-box-sizing border-box
       box-sizing border-box
-    [data-dpr="2"] .download
+    .download [data-dpr="2"]
       padding 10px 26px 10px 26px
-    [data-dpr="3"] .download
+    .download [data-dpr="3"]
       padding 15px 39px 15px 39px
       .image
         position relative
