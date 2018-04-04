@@ -3,7 +3,7 @@
 		<div class="banner-pannel pannel-top show-top-pannel">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
-
+					<VBannerItem :key="index" :item="slide" v-for="(slide, index) in slides"></VBannerItem>
 				</div>
 			</div>
 		</div>
@@ -28,12 +28,15 @@
 					},
 				},
 				slides: [{
-						desc: '111'
-					}, {
-						desc: '222'
-					}, {
-						desc: '333'
-					}],
+					title: '111',
+					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
+				}, {
+					title: '222',
+					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
+				}, {
+					title: '333',
+					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
+				}],
 				minWidth: 100,
 				intervalTime: 3* 1000,
 				animationTime: .5* 1000,
@@ -65,6 +68,10 @@
 					transform: `translate3d(${translateX}px, 0, 0)`,
 					WebkitTransform: `translate3d(${translateX}px, 0, 0)`,
 				}
+			},
+			itemStyle () {
+				const width = this.width || window.innerWidth
+				return {width: width+'px'}
 			}
 		},
 		mounted () {

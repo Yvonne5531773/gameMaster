@@ -1,3 +1,3 @@
 export default {
-	TXT_1: '',
+	TXT_1: '打开',
 }

@@ -8,8 +8,7 @@
 </template>
 <script>
 	import { mapState } from 'vuex'
-	import { prePage } from 'config/index'
-	import { getStore, removeStore } from 'utils/index'
+
 	export default {
 		data() {
 			return {
