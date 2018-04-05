@@ -84,7 +84,21 @@ module.exports = {
 					name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
 				}
 			}
-		]
+		],
+		rules: [{
+			test: /\.css$/,
+			use: [{
+				loader: 'style-loader'
+			}, {
+				loader: 'css-loader'
+			}, {
+				loader: 'px2rem-loader',
+				options: {
+					remUni: 75,
+					remPrecision: 8
+				}
+			}]
+		}]
 	},
 	vue: {
 		loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),

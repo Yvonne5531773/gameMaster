@@ -3,7 +3,7 @@
 		<div class="banner-pannel pannel-top show-top-pannel">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
-					<VBannerItem :key="index" :item="slide" v-for="(slide, index) in slides"></VBannerItem>
+					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" v-for="(slide, index) in slides"></VBannerItem>
 				</div>
 			</div>
 		</div>
@@ -104,10 +104,6 @@
 		width 100%
 		height 50px
 		z-index 1000
-	[data-dpr="2"] .banner-container
-		height 100px
-	[data-dpr="3"] .banner-container
-		height 150px
 	.banner-top
 		position relative
 		.banner-pannel
@@ -120,10 +116,6 @@
 			background-position center bottom
 			background-size: 100% 100%
 			color #fff
-		[data-dpr="2"] .banner-pannel
-			height 100px
-		[data-dpr="3"] .banner-pannel
-			height 150px
 		.pannel-top
 			top 0
 		.show-top-pannel

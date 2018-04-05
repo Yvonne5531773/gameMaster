@@ -68,21 +68,11 @@
       height 100%
       -webkit-box-sizing border-box
       box-sizing border-box
-    .download [data-dpr="2"]
-      padding 10px 26px 10px 26px
-    .download [data-dpr="3"]
-      padding 15px 39px 15px 39px
       .image
         position relative
         .pic
           height 40px
           min-width 72px
-        [data-dpr="2"] .pic
-          height 80px
-          min-width 144px
-        [data-dpr="3"] .pic
-          height 120px
-          min-width 216px
       .banner-label
         margin 0 12px
         -webkit-box-flex 1
@@ -90,21 +80,11 @@
         flex-grow 1
         -ms-flex-item-align start
         align-self flex-start
-      [data-dpr="2"] .banner-label
-        margin 0 24px
-      [data-dpr="3"] .banner-label
-        margin 0 36px
         p
           color #fff
         .title
           font-size 12px
           line-height 16px
-        [data-dpr="2"] .title
-          font-size 24px
-          line-height 32px
-        [data-dpr="3"] .title
-          font-size 36px
-          line-height 48px
       .open
         border-radius 2px
         text-align center
