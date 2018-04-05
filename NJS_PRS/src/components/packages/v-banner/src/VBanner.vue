@@ -3,7 +3,7 @@
 		<div class="banner-pannel pannel-top show-top-pannel">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
-					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" v-for="(slide, index) in slides"></VBannerItem>
+					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in slides" ></VBannerItem>
 				</div>
 			</div>
 		</div>
@@ -85,6 +85,7 @@
 				}, this.intervalTime)
 			},
 			slideNext () {
+				this.vm.showAnimation = true
 				const count = this.slides.length
 				this.vm.currentIndex += 1
 				setTimeout( () => {
@@ -92,6 +93,38 @@
 					(this.vm.showAnimation = false, this.vm.currentIndex = 0)
 				}, this.animationTime)
 			},
+			handleStart (event) {
+				console.log('handleStart event', event)
+				this.vm.touchStart = event.changedTouches[0]
+				this.vm.showAnimation = false
+				this.intervalId && clearInterval(this.intervalId)
+			},
+			handleMove (event) {
+				const touch = event.changedTouches[0]
+				this.vm.move = {
+					x: touch.clientX - this.vm.touchStart.clientX,
+					y: touch.clientY - this.vm.touchStart.clientY,
+				}
+				console.log('handleMove this.vm.move', this.vm.move)
+			},
+			handleEnd (event) {
+				const touchEnd = event.changedTouches[0],
+					moveX = touchEnd.clientX - this.vm.touchStart.clientX,
+					itemCount = this.slides.length
+				let nextIndex = Math.abs(moveX) < this.minWidth? this.vm.currentIndex:(moveX < 0? this.vm.currentIndex+1:this.vm.currentIndex-1)
+				this.vm.currentIndex = nextIndex
+				this.vm.move = {
+					x: 0,
+					y: 0
+				}
+				this.vm.showAnimation = true
+				setTimeout(() => {
+					this.vm.showAnimation = false
+					nextIndex === itemCount && (this.vm.currentIndex = 0)
+					nextIndex === -1 && (this.vm.currentIndex = itemCount-1)
+				}, this.animationTime)
+				this.intervalId = this.slideInterval()
+			}
 		}
 	}
 </script>

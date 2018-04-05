@@ -1,5 +1,5 @@
 <template>
-  <div :class="itemClass" :style="itemStyle">
+  <div :class="itemClass" :style="itemStyle" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
     <a class="download">
       <div class="image">
         <img class="pic" v-lazy="item.img"/>
@@ -29,6 +29,15 @@
       },
       item: {
 				type: Object
+      },
+			touchstart: {
+				type: Function
+      },
+			touchmove: {
+				type: Function
+			},
+			touchend: {
+				type: Function
       }
 		},
 		computed: {
