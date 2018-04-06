@@ -67,7 +67,7 @@
 				const width = this.width || window.innerWidth,
 					translateX = -(this.vm.currentIndex + 1) * width + this.vm.move.x
 				return {
-					width: width* this.slides.length + 'px',
+					width: width* this.vm.slideLength + 'px',
 					transform: `translate3d(${translateX}px, 0, 0)`,
 					WebkitTransform: `translate3d(${translateX}px, 0, 0)`,
 				}
@@ -78,18 +78,23 @@
 			}
 		},
 		mounted () {
+			this.init()
 			this.intervalId = this.slideInterval()
 		},
 		methods: {
+			init () {
+				this.vm.slideLength = this.vm.slides.length
+				this.vm.slides = _.concat(this.vm.slides)
+			},
 			slideInterval () {
 				this.vm.showAnimation = true
 				return setInterval(() => {
-					this.slideNext()
+//					this.slideNext()
 				}, this.intervalTime)
 			},
 			slideNext () {
 				this.vm.showAnimation = true
-				const count = this.slides.length
+				const count = this.vm.slideLength
 				this.vm.currentIndex += 1
 				setTimeout( () => {
 					this.vm.currentIndex === count &&
@@ -113,7 +118,7 @@
 			handleEnd (event) {
 				const touchEnd = event.changedTouches[0],
 					moveX = touchEnd.clientX - this.vm.touchStart.clientX,
-					itemCount = this.slides.length
+					itemCount = this.vm.slideLength
 				let nextIndex = Math.abs(moveX) < this.minWidth? this.vm.currentIndex:(moveX < 0? this.vm.currentIndex+1:this.vm.currentIndex-1)
 				this.vm.currentIndex = nextIndex
 				this.vm.move = {
