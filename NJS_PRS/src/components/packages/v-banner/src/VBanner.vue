@@ -3,7 +3,10 @@
 		<div class="banner-pannel pannel-top show-top-pannel">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
-					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in slides" ></VBannerItem>
+					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in slides"></VBannerItem>
+				</div>
+				<div class="slider-dot-list">
+					<span :class="{'dot-item dot-current':index===vm.currentIndex, 'dot-item':index!==vm.currentIndex}" :key="index" v-for="(slide, index) in slides"></span>
 				</div>
 			</div>
 		</div>
@@ -165,4 +168,22 @@
 				.showAnimation
 					-webkit-transition all .5s ease
 					transition all .5s ease
+				.slider-dot-list
+					position absolute
+					bottom 3px
+					left 50%
+					-webkit-transform translate(-50%, 0)
+					transform translate(-50%, 0)
+					.dot-item
+						display inline-block
+						width 3px
+						height 2px
+						margin 0 1px
+						border-radius 50%
+						background-color rgba(254,254,254,0.3)
+					.dot-current
+						width 5px
+						height 2px
+						border-radius 20%
+						background-color #F85959
 </style>

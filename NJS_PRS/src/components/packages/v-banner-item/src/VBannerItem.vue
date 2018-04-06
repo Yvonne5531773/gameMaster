@@ -7,7 +7,7 @@
       <div class="banner-label">
         <p class="title">{{item.title}}</p>
       </div>
-      <div class="open"></div>
+      <div class="open">{{openTxt}}</div>
     </a>
   </div>
 </template>
