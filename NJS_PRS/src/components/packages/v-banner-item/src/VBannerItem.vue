@@ -73,17 +73,17 @@
       -webkit-box-align center
       -ms-flex-align center
       align-items center
-      padding 5px 13px 5px 13px
+      padding .18rem .18rem .07rem .18rem
       height 100%
       -webkit-box-sizing border-box
       box-sizing border-box
       .image
         position relative
         .pic
-          height 40px
-          min-width 72px
+          height 1.22rem
+          min-width 1.97rem
       .banner-label
-        margin 0 12px
+        margin 0 .7rem 0 .35rem
         -webkit-box-flex 1
         -ms-flex-positive 1
         flex-grow 1
@@ -92,15 +92,15 @@
         p
           color #fff
         .title
-          font-size 12px
-          line-height 16px
+          font-size .33rem
+          line-height .47rem
       .open
-        border-radius 2px
+        border-radius 100px
         text-align center
-        font-size 13px
-        line-height 24px
-        min-width 56px
-        height 24px
-        color #fff
-        background-color #FA1F41
+        font-size .33rem
+        line-height .58rem
+        min-width 1.33rem
+        height .61rem
+        color #176AFF
+        background-color #fff
 </style>

@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "fs": "0.0.1-security",
-    "lib-flexible": "^0.3.2",
     "lodash": "^4.17.5",
+    "postcss-adaptive": "^0.5.0",
     "pug": "^2.0.0-rc.4",
     "velocity-animate": "^1.5.1",
     "vue": "^2.5.13",
@@ -72,7 +72,6 @@
     "opn": "^4.0.2",
     "ora": "^0.3.0",
     "phantomjs-prebuilt": "^2.1.16",
-    "px2rem-loader": "^0.1.9",
     "selenium-server": "2.53.1",
     "semver": "^5.5.0",
     "shelljs": "^0.7.4",

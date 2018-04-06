@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-dpr="1" style="font-size: 37.5px;">
+<html data-dpr="1">
   <head>
     <title>游戏超人</title>
     <meta charset="utf-8">
@@ -14,25 +14,40 @@
     <meta name=x5-orientation content=portrait>
     <meta name=x5-fullscreen content=true>
     <meta name=x5-page-mode content=app>
-    <!--清除缓存-->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
     <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
     <script>
-		  ((doc, win, undefined) => {
-			  var docEl = doc.documentElement,
-				  resizeEvt = 'orientationchange' in win? 'orientationchange' : 'resize',
-				  recalc = function () {
-					  var clientWidth = docEl.clientWidth;
-					  if (clientWidth === undefined) return;
-					  docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
-				  };
-			  if (doc.addEventListener === undefined) return;
-			  win.addEventListener(resizeEvt, recalc, false);
-			  doc.addEventListener('DOMContentLoaded', recalc, false)
-		  })(document, window)
+        (function (win, doc) {
+          var docEl = doc.documentElement;
+          function setRemUnit () {
+            var docWidth = docEl.clientWidth;
+            var rem = docWidth / 10;
+            docEl.style.fontSize = rem + 'px';
+          }
+          win.addEventListener('resize', function () {
+            setRemUnit();
+          }, false);
+          win.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+              setRemUnit();
+            }
+          }, false);
+          setRemUnit();
+          if (win.devicePixelRatio && win.devicePixelRatio >= 2) {
+            var testEl = doc.createElement('div');
+            var fakeBody = doc.createElement('body');
+            testEl.style.border = '0.5px solid transparent';
+            fakeBody.appendChild(testEl);
+            docEl.appendChild(fakeBody);
+            if (testEl.offsetHeight === 1) {
+              docEl.classList.add('hairlines');
+            }
+            docEl.removeChild(fakeBody);
+          }
+        }) (window, document)
     </script>
   </head>
   <style>
@@ -53,7 +68,6 @@
       padding: 0;
       border: 0;
       font-size: 100%;
-      line-height: 1.5;
       font-weight: normal;
       vertical-align: baseline;
       font-family: -apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;

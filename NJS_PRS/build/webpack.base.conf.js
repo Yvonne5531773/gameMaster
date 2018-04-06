@@ -10,6 +10,7 @@ var env = process.env.NODE_ENV
 var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
+var adaptive = require('postcss-adaptive')
 
 function resolve(dir) {
 	return path.join(__dirname, '..', dir)
@@ -83,22 +84,12 @@ module.exports = {
 					limit: 50000,
 					name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
 				}
+			},
+			{
+				test: /\.css$/,
+				loader: "style-loader!css-loader!postcss-loader"
 			}
-		],
-		rules: [{
-			test: /\.css$/,
-			use: [{
-				loader: 'style-loader'
-			}, {
-				loader: 'css-loader'
-			}, {
-				loader: 'px2rem-loader',
-				options: {
-					remUni: 75,
-					remPrecision: 8
-				}
-			}]
-		}]
+		]
 	},
 	vue: {
 		loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
@@ -118,5 +109,8 @@ module.exports = {
 		// new Jarvis({
 		// 	port: 1337
 		// })
-	]
+	],
+	postcss: function () {
+		return [adaptive({ remUnit: 72 })];
+	}
 }

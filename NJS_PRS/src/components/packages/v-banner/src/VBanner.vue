@@ -3,7 +3,7 @@
 		<div class="banner-pannel pannel-top show-top-pannel">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
-					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in slides"></VBannerItem>
+					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in vm.slideList"></VBannerItem>
 				</div>
 				<div class="slider-dot-list">
 					<span :class="{'dot-item dot-current':index===vm.currentIndex, 'dot-item':index!==vm.currentIndex}" :key="index" v-for="(slide, index) in slides"></span>
@@ -53,6 +53,10 @@
 				type: Number
 			}
 		},
+		created () {
+			this.init()
+			this.intervalId = this.slideInterval()
+		},
 		computed: {
 			containerStyle () {
 				return {
@@ -67,7 +71,7 @@
 				const width = this.width || window.innerWidth,
 					translateX = -(this.vm.currentIndex + 1) * width + this.vm.move.x
 				return {
-					width: width* this.vm.slideLength + 'px',
+					width: width* this.vm.slideList.length + 'px',
 					transform: `translate3d(${translateX}px, 0, 0)`,
 					WebkitTransform: `translate3d(${translateX}px, 0, 0)`,
 				}
@@ -77,14 +81,10 @@
 				return {width: width+'px'}
 			}
 		},
-		mounted () {
-			this.init()
-			this.intervalId = this.slideInterval()
-		},
 		methods: {
 			init () {
-				this.vm.slideLength = this.vm.slides.length
-				this.vm.slides = _.concat(this.vm.slides)
+				this.vm.slideLength = this.slides.length
+				this.vm.slideList = _.concat(this.slides[this.vm.slideLength-1], this.slides, this.slides[0])
 			},
 			slideInterval () {
 				this.vm.showAnimation = true
@@ -102,7 +102,6 @@
 				}, this.animationTime)
 			},
 			handleStart (event) {
-				console.log('handleStart event', event)
 				this.vm.touchStart = event.changedTouches[0]
 				this.vm.showAnimation = false
 				this.intervalId && clearInterval(this.intervalId)
@@ -113,7 +112,6 @@
 					x: touch.clientX - this.vm.touchStart.clientX,
 					y: touch.clientY - this.vm.touchStart.clientY,
 				}
-				console.log('handleMove this.vm.move', this.vm.move)
 			},
 			handleEnd (event) {
 				const touchEnd = event.changedTouches[0],
@@ -143,16 +141,15 @@
 		-webkit-text-size-adjust none
 		word-break break-word
 		width 100%
-		height 50px
+		height 1.39rem
 		z-index 1000
 	.banner-top
 		position relative
 		.banner-pannel
 			position fixed
 			width 100%
-			height 50px
-			background-image -webkit-gradient(linear, left top, right top, from(#202225), to(#1a191f))
-			background-image linear-gradient(to right, #202225, #1a191f)
+			height 1.39rem
+			background-image linear-gradient(-90deg, #1D50FF 0%, #00C2FF 100%)
 			background-repeat no-repeat
 			background-position center bottom
 			background-size: 100% 100%
@@ -175,20 +172,18 @@
 					transition all .5s ease
 				.slider-dot-list
 					position absolute
-					bottom 3px
+					bottom 0rem
 					left 50%
 					-webkit-transform translate(-50%, 0)
 					transform translate(-50%, 0)
 					.dot-item
 						display inline-block
-						width 3px
-						height 2px
-						margin 0 1px
+						width .1rem
+						height .1rem
+						margin 0 .07rem
 						border-radius 50%
-						background-color rgba(254,254,254,0.3)
+						opacity .7
+						background-color #fff
 					.dot-current
-						width 5px
-						height 2px
-						border-radius 20%
-						background-color #F85959
+						opacity 1
 </style>
