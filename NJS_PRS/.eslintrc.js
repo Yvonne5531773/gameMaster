@@ -15,8 +15,10 @@ module.exports = {
 			'unix'
 		],
 		'semi': [0],
+		'no-useless-escape': 'off',
+		'no-cond-assign': 'off',
 		'no-console': 'off',
 		"no-unused-vars": 0,
-		'no-mixed-spaces-and-tabs': [0]
+		'no-mixed-spaces-and-tabs': [0],
 	}
 };

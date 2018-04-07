@@ -1,6 +1,7 @@
 <template>
 	<div class='index'>
 		<VBanner></VBanner>
+		<VVideo></VVideo>
 		<!--<keep-alive>-->
 			<!--<component :is='current'></component>-->
 		<!--</keep-alive>-->

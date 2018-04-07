@@ -2,6 +2,7 @@ import { mapMutations } from 'vuex'
 import { worker } from 'api/worker'
 import { host, categoryPath } from 'config/index'
 import { getOperationFullTime } from 'utils/index'
+import PlayerConstructor from 'byted-toutiao-player'
 
 export default {
 	...mapMutations(['SET_COMPONENT']),
@@ -13,6 +14,10 @@ export default {
 	fetch(path) {
 		const url = host + path
 		return worker.work(url)
+	},
+
+	getPlayer (criteria) {
+		return new PlayerConstructor(criteria)
 	},
 
 	addHttp(url) {
