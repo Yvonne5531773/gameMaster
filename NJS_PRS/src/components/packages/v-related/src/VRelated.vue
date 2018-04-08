@@ -1,12 +1,12 @@
 <template>
-	<div class="video-no-player">
-
+	<div class="related">
+		<VRecommendItem :componentType='`VWaterfall`'></VRecommendItem>
 	</div>
 </template>
 
 <script>
 	export default {
-		name: 'VNoPlayer',
+		name: 'VRelated',
 		data () {
 			return {
 				vm: {
@@ -32,6 +32,6 @@
 </script>
 
 <style lang="stylus">
-	/*.video-no-player*/
+	/*.related*/
 
 </style>

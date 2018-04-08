@@ -1,12 +1,12 @@
 <template>
-	<div class="video-no-player">
-
+	<div class="recommend-item-recyclist">
+		
 	</div>
 </template>
 
 <script>
 	export default {
-		name: 'VNoPlayer',
+		name: 'VRecyclist',
 		data () {
 			return {
 				vm: {
@@ -32,6 +32,6 @@
 </script>
 
 <style lang="stylus">
-	/*.video-no-player*/
+	/*.recommend-item-recyclist*/
 
 </style>

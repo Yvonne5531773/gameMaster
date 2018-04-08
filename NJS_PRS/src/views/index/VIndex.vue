@@ -1,15 +1,13 @@
 <template>
-	<div class='index'>
+	<div class='index' ref="index">
 		<VBanner></VBanner>
 		<VVideo></VVideo>
-		<!--<keep-alive>-->
-			<!--<component :is='current'></component>-->
-		<!--</keep-alive>-->
+		<VRecommend></VRecommend>
+		<VBottom></VBottom>
 	</div>
 </template>
 <script>
 	import { mapState } from 'vuex'
-
 	export default {
 		data() {
 			return {
@@ -28,7 +26,7 @@
 
 		},
 		methods: {
-			async init () {
+			init () {
 
 			},
 		},
@@ -37,7 +35,6 @@
 
 <style lang='stylus' scoped>
 	.index
-		display flex
 		position absolute
 		margin 0
 		padding 0

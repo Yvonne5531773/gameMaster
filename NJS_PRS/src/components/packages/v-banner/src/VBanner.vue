@@ -1,6 +1,6 @@
 <template>
 	<section class="banner-container banner-top">
-		<div class="banner-pannel pannel-top show-top-pannel">
+		<div :class="{'banner-pannel pannel-top show-top-pannel':!vm.hideBanner, 'banner-pannel pannel-top hide-top-pannel':vm.hideBanner}">
 			<div class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
 					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in vm.slideList"></VBannerItem>
@@ -29,10 +29,12 @@
 						x: 0,
 						y: 0
 					},
+					hideBanner: false
 				},
 				slides: [{
-					title: '111',
-					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
+					title: '',
+					img: require("assets/img/banner/logo.png"),
+					first: true
 				}, {
 					title: '222',
 					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
@@ -85,6 +87,7 @@
 			init () {
 				this.vm.slideLength = this.slides.length
 				this.vm.slideList = _.concat(this.slides[this.vm.slideLength-1], this.slides, this.slides[0])
+				this.initBannerScroll()
 			},
 			slideInterval () {
 				this.vm.showAnimation = true
@@ -130,6 +133,23 @@
 					nextIndex === -1 && (this.vm.currentIndex = itemCount-1)
 				}, this.animationTime)
 				this.intervalId = this.slideInterval()
+			},
+			scrollFun (e) {
+				let offset = 100,
+					lastScrollTop = 0
+				let theScrollY = window.scrollY || window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop
+				if (!this.vm.hideBanner && theScrollY > offset && theScrollY > lastScrollTop) {
+					this.vm.hideBanner = true
+				} else if (this.vm.hideBanner && theScrollY <= lastScrollTop) {
+					this.vm.hideBanner = false
+				}
+				lastScrollTop = theScrollY
+			},
+			initBannerScroll () {
+				window.addEventListener('scroll', this.scrollFun.bind(this))
+			},
+			destroyed () {
+				window.removeEventListener('scroll', this.scrollFun.bind(this))
 			}
 		}
 	}
@@ -154,13 +174,6 @@
 			background-position center bottom
 			background-size: 100% 100%
 			color #fff
-		.pannel-top
-			top 0
-		.show-top-pannel
-			-webkit-transform translateY(0)
-			transform translateY(0)
-			-webkit-transition all 500ms cubic-bezier(.19, 1, .22, 1)
-			transition all 500ms cubic-bezier(.19, 1, .22, 1)
 			.slider-container
 				position relative
 				.slider-list
@@ -186,4 +199,16 @@
 						background-color #fff
 					.dot-current
 						opacity 1
+		.pannel-top
+			top 0
+		.show-top-pannel
+			-webkit-transform translateY(0)
+			transform translateY(0)
+			-webkit-transition all 500ms cubic-bezier(.19, 1, .22, 1)
+			transition all 500ms cubic-bezier(.19, 1, .22, 1)
+		.hide-top-pannel
+			-webkit-transform translateY(-100%)
+			transform translateY(-100%)
+			-webkit-transition all 300ms cubic-bezier(.55, .055, .675, .19)
+			transition all 300ms cubic-bezier(.55, .055, .675, .19)
 </style>

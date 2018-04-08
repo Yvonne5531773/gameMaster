@@ -15,8 +15,7 @@ const routerMode = 'history', //history | hash
 	recommendPath = '/v1/recommend',
 	aiRecommendPath = '/v1/ai_recommend',
 	resourcePath = '/v1/get_articles/',
-	baiduPath = 'https://www.baidu.com/baidu?ie=utf-8&tn=98012088_5_dg&ch=5&word=',
-	thunderPid = "124563"
+	baiduPath = 'https://www.baidu.com/baidu?ie=utf-8&tn=98012088_5_dg&ch=5&word='
 
 if (process.env.NODE_ENV === 'development') {
 
@@ -40,5 +39,4 @@ export {
 	aiRecommendPath,
 	resourcePath,
 	baiduPath,
-	thunderPid
 }

@@ -1,8 +1,11 @@
 <template>
-	<section class="video-container">
+	<section class="video-container" ref="video">
 		<keep-alive>
 			<component :is='current'></component>
 		</keep-alive>
+		<VDownloadBottom></VDownloadBottom>
+		<VVideoHeader></VVideoHeader>
+		<VUserShare></VUserShare>
 	</section>
 </template>
 
@@ -15,6 +18,9 @@
 					components: ['VPlayer', 'VNoPlayer']
 				},
 			}
+		},
+		mounted () {
+
 		},
 		props: {
 

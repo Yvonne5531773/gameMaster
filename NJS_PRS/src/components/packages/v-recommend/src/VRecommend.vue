@@ -1,12 +1,12 @@
 <template>
-	<div class="video-no-player">
-
+	<div class="recommend">
+		<VRelated></VRelated>
 	</div>
 </template>
 
 <script>
 	export default {
-		name: 'VNoPlayer',
+		name: 'VRecommend',
 		data () {
 			return {
 				vm: {
@@ -32,6 +32,6 @@
 </script>
 
 <style lang="stylus">
-	/*.video-no-player*/
-
+	.recommend
+		padding .28rem .42rem
 </style>

@@ -1,10 +1,10 @@
 <template>
-	<section class="video-player">
+	<div class="video-player">
 		<!--qq分享默认会取第一个img标签的src-->
 		<img class="avatar" :src="vm.videoData.poster"/>
 		<div class="placeholder" :id="vm.videoData.id"></div>
 		<VMask></VMask>
-	</section>
+	</div>
 </template>
 
 <script>
@@ -61,7 +61,7 @@
 					vjs.volume(0.65)
 					window.vjs = vjs
 					window.isFullscreen = false
-					if (document.getElementsByTagName('video') && this.$ua.os.android && !window.isToutiaoVideo && simplify.request('ft') !== '1') {
+					if (document.getElementsByTagName('video') && this.$ua.os.android /*&& simplify.request('ft') !== '1'*/) {
 						document.getElementsByTagName('video')[0].addEventListener('x5videoenterfullscreen', () => {
 							window.isFullscreen = true;
 							// 安卓：（非全屏播放至20%弹出浮层），点击全屏直接下载
