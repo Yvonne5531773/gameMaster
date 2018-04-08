@@ -47,6 +47,6 @@
 				top -0.03rem
 				vertical-align middle
 				/*width .44rem*/
-				height .35rem
+				height .34rem
 
 </style>

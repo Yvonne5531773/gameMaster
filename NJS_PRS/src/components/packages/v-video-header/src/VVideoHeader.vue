@@ -2,7 +2,7 @@
 	<div class="video-header">
 		<div class="info">
 			<div class="title">
-				<span>{{vm.title | clip(60)}}</span>
+				<span>{{title | clip(60)}}</span>
 			</div>
 		</div>
 	</div>
@@ -13,13 +13,13 @@
 		name: 'VVideoHeader',
 		data () {
 			return {
-				vm: {
-					title: '哪位大神告诉我这是怎么了 ？千万里路去和队友汇合,忽然就没了哪位大神告诉我这是怎么了 ？千万里路去和队友汇合,忽然就没了'
-				},
+
 			}
 		},
 		props: {
-
+			title: {
+				type: String
+			}
 		},
 		created () {
 			this.init()

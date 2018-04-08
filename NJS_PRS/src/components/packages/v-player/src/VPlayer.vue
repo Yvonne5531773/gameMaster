@@ -1,8 +1,8 @@
 <template>
 	<div class="video-player">
 		<!--qq分享默认会取第一个img标签的src-->
-		<img class="avatar" :src="vm.videoData.poster"/>
-		<div class="placeholder" :id="vm.videoData.id"></div>
+		<img class="avatar" :src="videoData.poster"/>
+		<div class="placeholder" :id="videoData.id"></div>
 		<VMask></VMask>
 	</div>
 </template>
@@ -12,17 +12,13 @@
 		name: 'VPlayer',
 		data () {
 			return {
-				vm: {
-					videoData: {
-						id: `v${Math.random()}`.slice(3).toString(16).slice(0, 4),
-						poster: '',
-						src: 'http://v.g.m.liebao.cn/trans/a87ff1deaf6c7cd1258aa875bc3b8bb3.mp4',
-					}
-				},
+
 			}
 		},
 		props: {
-
+			videoData: {
+				type: Object
+			}
 		},
 		mounted () {
 			this.player = this.init()
@@ -34,13 +30,13 @@
 		methods: {
 			init () {
 				const criteria = {
-					id: this.vm.videoData.id,
+					id: this.videoData.id,
 					width: '100%',
 					height: '100%',
 					plugins: {
 						vjs_play: {},
 						vjs_poster: {
-							src: this.vm.videoData.poster,
+							src: this.videoData.poster,
 						},
 						vjs_monitor: {
 							handle: type => this.hanleEvent(type),
@@ -54,40 +50,17 @@
 			ready () {
 				console.log('in ready this.player', this.player)
 				console.log('in ready this.$ua', this.$ua)
-				const src = this.vm.videoData.src
+				const src = this.videoData.src
 				this.player.play(src).then(function (vjs) {
 					console.log('vjs', vjs)
 					vjs.preload('metadata')
 					vjs.volume(0.65)
 					window.vjs = vjs
 					window.isFullscreen = false
-					if (document.getElementsByTagName('video') && this.$ua.os.android /*&& simplify.request('ft') !== '1'*/) {
+					if (document.getElementsByTagName('video') && this.$ua.os.android) {
 						document.getElementsByTagName('video')[0].addEventListener('x5videoenterfullscreen', () => {
-							window.isFullscreen = true;
-							// 安卓：（非全屏播放至20%弹出浮层），点击全屏直接下载
-							if (this.$ua.os.android) {
-								const currentTime = window.vjs.cache_.currentTime
-								if (currentTime <= 1) {
-									utils.ttSessionStorage.setItem('auto_full_screen', true)
-									if (utils.fullscreenDownloadTest.control) {
-										window.gaevent('video_fullscreen_control', 'auto')
-									}
-									if (utils.fullscreenDownloadTest.test1) {
-										window.gaevent('video_fullscreen_test1', 'auto')
-									}
-									if (utils.fullscreenDownloadTest.test2) {
-										window.gaevent('video_fullscreen_test2', 'auto')
-									}
-									if (utils.fullscreenDownloadTest.test3) {
-										window.gaevent('video_fullscreen_test3', 'auto')
-									}
-									if (utils.fullscreenDownloadTest.test4) {
-										window.gaevent('video_fullscreen_test4', 'auto')
-									}
-								}
-								self.fullScreenDownload()
-							}
-						});
+							window.isFullscreen = true
+						})
 						document.getElementsByTagName('video')[0].addEventListener('x5videoexitfullscreen', () => {
 							window.isFullscreen = false
 						})
