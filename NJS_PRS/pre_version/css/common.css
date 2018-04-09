@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    margin:0;padding:0;
+}
+a {
+    text-decoration: none;
+}
+html {
+    font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Microsoft YaHei",STHeiti,SimHei,sans-serif;
+}
+em{
+	font-style: normal;
+}
+body{
+	max-width:660px;
+	margin:0 auto;
+	overflow-x: hidden;
+}
+@media screen and (min-device-width: 960px)
+body {
+    position: relative;
+    width: 450px !important;
+    margin: 0 auto;
+    -webkit-box-shadow: 0 0 0 0.02rem #e6e6e6;
+    box-shadow: 0 0 0 0.02rem #e6e6e6;
+}
+img{
+	border:none;
+	outline:none;
+}
