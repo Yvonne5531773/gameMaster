@@ -71,5 +71,5 @@
 				color #ffffff
 			.download-btn
 				background-color #ffffff
-				color #ee2b2a
+				color #009AFF
 </style>

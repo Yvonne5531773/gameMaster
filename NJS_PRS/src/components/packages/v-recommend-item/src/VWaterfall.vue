@@ -58,10 +58,16 @@
 			height 2.75rem
 			background-color #d8d8d8
 		.desc
+			display -webkit-box
+			display box
+			-webkit-box-orient vertical
+			-webkit-line-clamp 2
+			overflow hidden
+			text-overflow ellipsis
 			padding-top .1rem
 			color #333
 			line-height .54rem
 			font-size .39rem
-			height 1.125rem
+			height 1rem
 			background-color #fbfbfb
 </style>

@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const state = {
 	component: '',
+	videoId: ''
 }
 
 export default new Vuex.Store({

@@ -2,7 +2,7 @@
 	<div class="video-header">
 		<div class="info">
 			<div class="title">
-				<span>{{title | clip(60)}}</span>
+				<span>{{title | clip(62)}}</span>
 			</div>
 		</div>
 	</div>
@@ -46,6 +46,12 @@
 			padding .4rem .69rem .4rem .69rem
 			.title
 				span
+					display -webkit-box
+					display box
+					overflow hidden
+					text-overflow ellipsis
+					-webkit-line-clamp 2
+					-webkit-box-orient vertical
 					letter-spacing 0
 					line-height .67rem
 </style>

@@ -1,6 +1,7 @@
-import {cookie, request, getStore} from '../utils/index'
+import {cookie, request, getStore} from 'utils/index'
+import { worker } from 'api/worker'
+import { weixin } from '../config/index'
 import ua from '../ua/index'
-require('static/javascripts/weixin_all')
 
 const webId = cookie('gm_webid') || '0',
 	videoData = getStore('VIDEO_DATA')
@@ -41,57 +42,59 @@ function getShareTitle () {
 }
 
 function getShareImage () {
-	let articleImg = document.querySelector('article .article__content img');
-	let videoBox = document.querySelector('.tt-video');
-	let imgUrl = videoBox ? $(videoBox).find('video').attr('poster') : null;
-	if (!imgUrl) {
-		imgUrl = articleImg ? articleImg.src : 'https://s3.pstatp.com/site/promotion/landing_page/img/icon-hd%20_38d77c65bfaa5d015089238d89dc41f9.png'
-	}
-	return imgUrl
+	return videoData.poster || ''
 }
 
 function getDescription () {
 	return videoData.description || ''
 }
 
-function init () {
-	if (ua.browser.weixin && 'weixin' in window) {
-		window.weixin.onReady(
-			function () {
-				let title = getShareTitle(),
-					imgUrl = getShareImage(),
-					url = getShareLink(),
-					description = getDescription();
-				// 朋友圈
-				if (window.wx.onMenuShareTimeline) {
-					window.wx.onMenuShareTimeline({
-						title: title, // 分享标题
-						desc: description,
-						link: url, // 分享链接
-						imgUrl: imgUrl, // 分享图标
-						success: function () {
-							window.gaevent('share_success', 'share', location.hostname + location.pathname);
-						},
-						cancel: function () {
-						},
-					});
-				}
-				if (window.wx.onMenuShareAppMessage) {
-					window.wx.onMenuShareAppMessage({
-						title: title,
-						desc: description,
-						link: url,
-						imgUrl: imgUrl,
-						success: function () {
-							window.gaevent('share_success', 'share', location.hostname + location.pathname);
-						},
-					});
-				}
-			}
-		)
+function createNonceStr () {
+	return Math.random().toString(36).substr(2, 15)
+}
+
+async function init () {
+	console.log('init weixin', weixin)
+	let wxconfig = {},
+		appid = weixin.appid,
+		nonceStr = createNonceStr(),
+		timestamp = Date.now(),
+		url = window.location.href,
+		debug = weixin.debug,
+		swapTitleInWX = weixin.swapTitleInWX,
+		callback = () => {
+			//success callback
+			console.log('success callback')
+		}
+	if (ua.browser.weixin) {
+		const signatureUrl = "//open.snssdk.com/jssdk_signature/",
+			data = {
+				appid: appid,
+				nonceStr: nonceStr,
+				timestamp: timestamp,
+				url: url
+			},
+			res = await worker.work(signatureUrl, data)
+		console.log('weixin res', res)
+		wxconfig = {
+			debug: debug,                   // 开启调试模式,调用的所有api的返回值会在客户端alert出来
+			appId: appid,                   // 必填，公众号的唯一标识
+			timestamp: timestamp,           // 必填，生成签名的时间戳
+			nonceStr: nonceStr,             // 必填，生成签名的随机串
+			signature: res.signature,       // 必填，签名
+			swapTitleInWX: swapTitleInWX,   // 针对朋友圈
+		}
 	}
+	setShareInfo({
+		title: getShareTitle(),
+		summary: getDescription(),
+		pic: getShareImage(),
+		url: getShareLink(),
+		WXconfig: wxconfig,
+		callback: callback
+	})
 }
 
 module.exports = {
-	init: init,
+	init: init
 }

@@ -249,11 +249,9 @@ export const hash = () => {
 		for (var k in arguments[0]) {
 			hashQuery[k] = arguments[0][k]
 		}
-
 		var s2 = Object.keys(hashQuery).map(function(h) {
 			return "h=" + hashQuery[h];
 		}).join('&')
-
 		location.href = "#" + s2.substring(0, s2.length - 1)
 	}
 }
@@ -289,7 +287,6 @@ export const getBrowserName = () => {
 			break;
 		}
 	}
-
 	return browserName;
 }
 
@@ -297,7 +294,6 @@ export const toQuery = (obj) => {
 	return Object.keys(obj).map(function(k) {
 		return [k, obj[k]].join('=');
 	}).join('&');
-
 }
 
 export const capitalizeFirstLetter = (word) => {
@@ -346,3 +342,37 @@ export const getOperationFullTime = date => {
 	return '' + updateDate.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + sceonds
 }
 
+//返回x位随机数
+export const createHexRandom = (bit) => {
+	console.log('createHexRandom', bit)
+	let num = '',
+		tmp = 0;
+	for (let i = 0; i <= bit - 1; i++) {
+		tmp = Math.ceil(Math.random() * 15);
+		if (tmp > 9) {
+			switch (tmp) {
+				case(10):
+					num += 'a';
+					break;
+				case(11):
+					num += 'b';
+					break;
+				case(12):
+					num += 'c';
+					break;
+				case(13):
+					num += 'd';
+					break;
+				case(14):
+					num += 'e';
+					break;
+				case(15):
+					num += 'f';
+					break;
+			}
+		} else {
+			num += tmp
+		}
+	}
+	return num
+}

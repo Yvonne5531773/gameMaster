@@ -15,6 +15,9 @@ module.exports = {
 			'unix'
 		],
 		'semi': [0],
+		'no-undef': 'off',
+		'no-constant-condition': 'off',
+		'no-fallthrough': 'off',
 		'no-useless-escape': 'off',
 		'no-cond-assign': 'off',
 		'no-console': 'off',

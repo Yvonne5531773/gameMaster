@@ -7,17 +7,11 @@
 	</div>
 </template>
 <script>
-	import { mapState } from 'vuex'
 	export default {
 		data() {
 			return {
 
 			}
-		},
-		watch: {
-			component () {
-				this.init()
-			},
 		},
 		mounted () {
 			this.init()
@@ -27,7 +21,8 @@
 		},
 		methods: {
 			init () {
-
+				//微信初始化
+//				this.weixinInit()
 			},
 		},
 	}

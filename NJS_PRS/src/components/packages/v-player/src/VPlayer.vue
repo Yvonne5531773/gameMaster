@@ -24,9 +24,6 @@
 			this.player = this.init()
 			this.ready()
 		},
-		computed: {
-
-		},
 		methods: {
 			init () {
 				const criteria = {
@@ -117,7 +114,7 @@
 <style src="./video.css"></style>
 <style lang="stylus">
 	.video-player
-		height 5.2rem
+		height 5.6rem
 		overflow-y hidden
 		background-color rgba(0,0,0,0.8)
 		.avatar
@@ -125,5 +122,5 @@
 			width 0
 			height 0
 		.placeholder
-			height 5.2rem
+			height 100%
 </style>
