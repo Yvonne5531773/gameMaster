@@ -30,6 +30,8 @@ export default class downloadApp {
 
 	//唤醒应用宝app
 	goMyappDownload () {
+		console.log('in goMyappDownload')
+		this.removeIframe()
 		setTimeout( () => {
 			const ele = this.getIframe()
 			window.document.body.appendChild(ele)
@@ -46,6 +48,11 @@ export default class downloadApp {
 		ele.src = app.myapp
 		ele.style.display = 'none'
 		return ele
+	}
+
+	removeIframe () {
+		const iframe = window.document.getElementById('app_dl_iframe')
+		iframe && window.document.body.removeChild(iframe)
 	}
 
 	beforeAppDownload () {

@@ -1,7 +1,7 @@
 import { mapMutations } from 'vuex'
 import { worker } from 'api/worker'
 import { host } from 'config/index'
-import { setStore, getStore, createHexRandom } from 'utils/index'
+import { setStore, getStore, createHexRandom, getOperationFullTime } from 'utils/index'
 import PlayerConstructor from 'byted-toutiao-player'
 import weixin from '../weixin/index'
 import withApp from '../withApp/index'
@@ -67,12 +67,30 @@ export default {
 						new withApp.downloadApp(criteria)
 					}
 				}, 500)
-				// new withApp.wakeUpApp()
+				new withApp.wakeUpApp(criteria)
 			} else {
-				// new withApp.wakeUpApp()
+				new withApp.wakeUpApp(criteria)
 				new withApp.downloadApp(criteria)
 			}
 		}
+	},
+
+	report (criteria) {
+		const system = ua.os.ios? 2 : (ua.os.android? 1 : 3),
+			source = '',
+			network = wx.getNetworkType({
+				success: function (res) {
+					var networkType = res.networkType // 返回网络类型2g，3g，4g，wifi
+				}
+			}),
+			uptime = getOperationFullTime(new Date()),
+			obj = {
+				system: system,
+				source: source,
+				network: network,
+				uptime: uptime
+			}
+		_.assignIn(obj, criteria)
 	},
 
 	addHttp (url) {
