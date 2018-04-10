@@ -11,27 +11,11 @@
 <script>
 	export default {
 		name: 'VVideoHeader',
-		data () {
-			return {
-
-			}
-		},
 		props: {
 			title: {
 				type: String
 			}
 		},
-		created () {
-			this.init()
-		},
-		computed: {
-
-		},
-		methods: {
-			init () {
-
-			},
-		}
 	}
 </script>
 

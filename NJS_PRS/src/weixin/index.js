@@ -54,7 +54,6 @@ function createNonceStr () {
 }
 
 async function init () {
-	console.log('init weixin', weixin)
 	let wxconfig = {},
 		appid = weixin.appid,
 		nonceStr = createNonceStr(),
@@ -64,7 +63,7 @@ async function init () {
 		swapTitleInWX = weixin.swapTitleInWX,
 		callback = () => {
 			//success callback
-			console.log('success callback')
+			// console.log('success callback')
 		}
 	if (ua.browser.weixin) {
 		const signatureUrl = "//open.snssdk.com/jssdk_signature/",
@@ -75,7 +74,6 @@ async function init () {
 				url: url
 			},
 			res = await worker.work(signatureUrl, data)
-		console.log('weixin res', res)
 		wxconfig = {
 			debug: debug,                   // 开启调试模式,调用的所有api的返回值会在客户端alert出来
 			appId: appid,                   // 必填，公众号的唯一标识

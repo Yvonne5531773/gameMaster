@@ -1,11 +1,11 @@
 <template>
-  <div :class="itemClass" :style="itemStyle" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
+  <div @click="open" :class="itemClass" :style="itemStyle" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
     <a class="download">
       <div class="image" :style="!item.first&&'paddingLeft:.21rem'">
         <img :class="{'first':item.first, 'pic':!item.first}" :style="!item.img&&`backgroundColor:#d8d8d8`" :src="item.img"/>
       </div>
       <div class="banner-label">
-        <p class="title" v-if="!item.first">{{item.title}}</p>
+        <p class="title" v-if="!item.first">{{item.title | clip(54)}}</p>
         <img class="game-master-txt-pic" :src="gameMasterTxtPic" v-else/>
       </div>
       <img class="bg-pic" :src="bgPic" v-if="item.first"/>
@@ -53,6 +53,11 @@
 				return require('assets/img/banner/game-master-bg.png')
       }
 		},
+    methods: {
+	    open () {
+	    	this.activate()
+      }
+    }
 	}
 </script>
 
@@ -75,13 +80,12 @@
       -webkit-box-align center
       -ms-flex-align center
       align-items center
-      /*padding .18rem .18rem .07rem .18rem*/
       height 100%
       -webkit-box-sizing border-box
       box-sizing border-box
       .image
         position relative
-        padding-top .13rem
+        padding-top .1rem
         .pic
           height 1.22rem
           min-width 1.97rem
@@ -89,7 +93,7 @@
           min-width 1.39rem
           height 1.39rem
       .banner-label
-        margin 0 .7rem 0 .35rem
+        margin .21rem .7rem 0 .35rem
         -webkit-box-flex 1
         -ms-flex-positive 1
         flex-grow 1
@@ -98,12 +102,18 @@
         p
           color #fff
         .title
+          display -webkit-box
+          display box
+          overflow hidden
+          text-overflow: ellipsis
+          -webkit-box-orient vertical
           font-size .33rem
-          line-height .9rem
+          line-height .47rem
+          -webkit-line-clamp 2
         .game-master-txt-pic
           position relative
           right .44rem
-          top .08rem
+          bottom .14rem
           width 2.17rem
           height .51rem
       .open

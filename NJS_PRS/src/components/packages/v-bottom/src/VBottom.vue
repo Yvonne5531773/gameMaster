@@ -5,7 +5,7 @@
 				<img :src="bottomPic" />
 			</div>
 			<p class="txt">{{$txt.TXT_10}}</p>
-			<div class="btn">
+			<div @click="open" class="btn">
 				<span style="font-weight: 100">{{$txt.TXT_1}}</span>
 			</div>
 		</div>
@@ -15,28 +15,15 @@
 <script>
 	export default {
 		name: 'VBottom',
-		data () {
-			return {
-				vm: {
-
-				},
-			}
-		},
-		props: {
-
-		},
-		created () {
-			this.init()
-		},
 		computed: {
 			bottomPic () {
 				return require('assets/img/bottom/bottom-bg.png')
 			}
 		},
 		methods: {
-			init () {
-
-			},
+			open () {
+				this.activate()
+			}
 		}
 	}
 </script>
@@ -72,8 +59,8 @@
 				color #fff
 				background-image linear-gradient(-90deg, #1D50FF 0%, #00C2FF 100%)
 				width 2.78rem
-				height 1.11rem
-				line-height 1.1rem
+				height 1.1rem
+				line-height 1.15rem
 				text-align center
 				letter-spacing 0
 </style>

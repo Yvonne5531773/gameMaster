@@ -3,29 +3,26 @@
 		<div class="item-top">
 			<b class="item-top-left"></b>
 			<p class="item-title">{{title}}</p>
-			<span class="item-top-right">{{$txt.TXT_9}}</span>
+			<span class="item-top-right" v-if="!isIOS()">{{$txt.TXT_9}}</span>
 		</div>
 		<keep-alive>
-			<component :is='current' :data="vm.data"></component>
+			<component v-if="vm.data" :is='current' :data="vm.data"></component>
 		</keep-alive>
 	</div>
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	import VWaterfall from './VWaterfall.vue'
 	import VRecyclist from './VRecyclist.vue'
+	import { urls } from 'config/index'
+	import { getBrowserName, toQuery } from 'utils/index'
 	export default {
 		name: 'VRecommendItem',
 		data () {
 			return {
 				vm: {
-					data: [{
-						desc: '神仙打架，透视外挂瞬间爆炸还有谁神仙打架，透视外挂瞬间爆炸还有谁！！！！'
-					},{
-						desc: '开启伏地魔模式，一路杀进前十，医疗包已备…'
-					},{
-						desc: '落地成盒需要缘分@！！'
-					}]
+					data: null
 				},
 			}
 		},
@@ -34,10 +31,11 @@
 				type: String
 			}
 		},
-		created () {
+		mounted () {
 			this.init()
 		},
 		computed: {
+			...mapState(['videoId']),
 			current () {
 				return this.componentType
 			},
@@ -46,9 +44,33 @@
 			}
 		},
 		methods: {
-			init () {
-
+			async init () {
+				const data = await this.fetchRecommendData()
+				_.forEach(data, this.dto)
+				this.vm.data = _.cloneDeep(data)
 			},
+			async fetchRecommendData () {
+				const uuid = this.getId('uuid'),
+					aid = this.getId('aid'),
+					videoId = this.videoId,
+					model = getBrowserName(),
+					url = urls.recommend + '&' + toQuery({
+						uuid: uuid,
+						aid: aid,
+						contentid: videoId,
+						model: model
+					})
+				const recommendData = await this.fetch(url)
+				return !_.isEmpty(recommendData)? recommendData.data:[]
+			},
+			dto (data) {
+				const avatar = !_.isEmpty(data.images)? data.images[0] : '',
+					desc = data.title || ''
+				_.assignIn(data, {
+					avatar: avatar,
+					desc: desc
+				})
+			}
 		},
 		components: {
 			VWaterfall,
@@ -64,7 +86,7 @@
 		.item-top
 			margin-bottom .28rem
 			height .42rem
-			line-height .36rem
+			line-height .39rem
 			.item-top-left
 				position absolute
 				border-radius 1.39rem

@@ -344,7 +344,6 @@ export const getOperationFullTime = date => {
 
 //返回x位随机数
 export const createHexRandom = (bit) => {
-	console.log('createHexRandom', bit)
 	let num = '',
 		tmp = 0;
 	for (let i = 0; i <= bit - 1; i++) {

@@ -1,5 +1,5 @@
 <template>
-	<div class="video-user-share" ref="userShare">
+	<div class="video-user-share" v-if="!isIOS()">
 		<span class="avatar">
 			<img v-lazy="avatar"/>
 		</span>
@@ -8,26 +8,13 @@
 			{{$txt.TXT_6}}
 			<span class="game-master">{{$txt.TXT_7}}</span>
 		</div>
-		<span class="open-btn">{{$txt.TXT_1}}</span>
+		<span @click="open" class="open-btn">{{$txt.TXT_1}}</span>
 	</div>
 </template>
 
 <script>
 	export default {
 		name: 'VUserShare',
-		data () {
-			return {
-				vm: {
-
-				},
-			}
-		},
-		props: {
-
-		},
-		created () {
-			this.init()
-		},
 		computed: {
 			avatar () {
 				return {
@@ -41,8 +28,8 @@
 			}
 		},
 		methods: {
-			init () {
-
+			open () {
+				this.activate()
 			}
 		}
 	}
@@ -88,7 +75,7 @@
 			background-image: linear-gradient(-90deg, #1D50FF 0%, #00C2FF 100%)
 			width 2.01rem
 			height .81rem
-			line-height .82rem
+			line-height .85rem
 			font-size .39rem
 			font-weight 100
 </style>

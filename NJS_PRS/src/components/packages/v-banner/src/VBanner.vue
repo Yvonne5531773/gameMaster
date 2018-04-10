@@ -1,11 +1,11 @@
 <template>
 	<section class="banner-container banner-top">
 		<div :class="{'banner-pannel pannel-top show-top-pannel':!vm.hideBanner, 'banner-pannel pannel-top hide-top-pannel':vm.hideBanner}">
-			<div class="slider-container" :style="containerStyle">
+			<div v-if="slides" class="slider-container" :style="containerStyle">
 				<div :class="slideListClass" :style="slideListStyle">
 					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in vm.slideList"></VBannerItem>
 				</div>
-				<div class="slider-dot-list">
+				<div class="slider-dot-list" v-show="slides&&slides.length>1">
 					<span :class="{'dot-item dot-current':index===vm.currentIndex, 'dot-item':index!==vm.currentIndex}" :key="index" v-for="(slide, index) in slides"></span>
 				</div>
 			</div>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+	import { urls } from 'config/index'
+	import { getBrowserName, toQuery } from 'utils/index'
 	export default {
 		name: 'VBanner',
 		data () {
@@ -29,19 +31,15 @@
 						x: 0,
 						y: 0
 					},
-					hideBanner: false
+					hideBanner: false,
+					slideList: null,
 				},
-				slides: [{
+				firstSlide: [{
 					title: '',
 					img: require("assets/img/banner/logo.png"),
 					first: true
-				}, {
-					title: '222',
-					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
-				}, {
-					title: '333',
-					img: 'http://p3.pstatp.com/video1609/6c2d0004fb54444772ce'
 				}],
+				slides: null,
 				minWidth: 100,
 				intervalTime: 3* 1000,
 				animationTime: .5* 1000,
@@ -55,8 +53,8 @@
 				type: Number
 			}
 		},
-		created () {
-			this.init()
+		async created () {
+			await this.init()
 			this.intervalId = this.slideInterval()
 		},
 		computed: {
@@ -84,15 +82,42 @@
 			}
 		},
 		methods: {
-			init () {
+			async init () {
+				this.slides = await this.fetchBannerData()
+				_.forEach(this.slides, this.dto)
+				this.slides = !_.isEmpty(this.slides)? this.firstSlide.concat(this.slides) : this.firstSlide
 				this.vm.slideLength = this.slides.length
 				this.vm.slideList = _.concat(this.slides[this.vm.slideLength-1], this.slides, this.slides[0])
 				this.initBannerScroll()
 			},
+			async fetchBannerData () {
+				const aid = this.getId('aid'),
+					model = getBrowserName(),
+					count = 3,
+					url = urls.fresh + '&' + toQuery({
+						aid: aid,
+						model: model,
+						count: count
+					})
+				let bannerData
+				try {
+					bannerData = await this.fetch(url)
+				} catch (e) {
+					console.log('error:', e)
+				}
+				return !_.isEmpty(bannerData)? bannerData.data : []
+			},
+			dto (data) {
+				const img = !_.isEmpty(data.images)? data.images[0] : ''
+				_.assignIn(data, {
+					img: img
+				})
+			},
 			slideInterval () {
+				if (this.slides && this.slides.length === 1) return
 				this.vm.showAnimation = true
 				return setInterval(() => {
-//					this.slideNext()
+					this.slideNext()
 				}, this.intervalTime)
 			},
 			slideNext () {
@@ -105,11 +130,13 @@
 				}, this.animationTime)
 			},
 			handleStart (event) {
+				if (this.slides && this.slides.length === 1) return
 				this.vm.touchStart = event.changedTouches[0]
 				this.vm.showAnimation = false
 				this.intervalId && clearInterval(this.intervalId)
 			},
 			handleMove (event) {
+				if (this.slides && this.slides.length === 1) return
 				const touch = event.changedTouches[0]
 				this.vm.move = {
 					x: touch.clientX - this.vm.touchStart.clientX,
@@ -117,6 +144,7 @@
 				}
 			},
 			handleEnd (event) {
+				if (this.slides && this.slides.length === 1) return
 				const touchEnd = event.changedTouches[0],
 					moveX = touchEnd.clientX - this.vm.touchStart.clientX,
 					itemCount = this.vm.slideLength

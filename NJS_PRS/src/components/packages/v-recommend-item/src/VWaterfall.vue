@@ -1,39 +1,33 @@
 <template>
 	<div class="recommend-waterfall">
-		<div class="waterfall-item" :key="index" v-for="(item, index) in data">
-			<div class="video-avatar">
-				<img v-if="item.avatar" :src="item.avatar"/>
-			</div>
+		<div @click="open(item)" class="waterfall-item" :key="index" v-for="(item, index) in data">
+			<div class="video-avatar" :style="getAvatar(item)"></div>
 			<div class="desc">{{item.desc | clip(40)}}</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import { toQuery } from 'utils/index'
 	export default {
 		name: 'VWaterfall',
-		data () {
-			return {
-				vm: {
-
-				},
-			}
-		},
 		props: {
 			data: {
 				type: Array
 			}
 		},
-		created () {
-			this.init()
-		},
-		computed: {
-
-		},
 		methods: {
-			init () {
-
+			getAvatar (item) {
+				return {
+					backgroundImage: `url(${item.avatar})`
+				}
 			},
+			open (item) {
+				if(!item) return
+				const newsid = item.contentid
+				this.isIOS() && (location.href = `/index?${toQuery({newsid: newsid})}`)
+				!this.isIOS() && this.activate()
+			}
 		}
 	}
 </script>
@@ -52,10 +46,11 @@
 		&:nth-child(2n)
 			padding-left .13rem
 			padding-right 0
-			float right
+			/*float right*/
 		.video-avatar
 			width 100%
 			height 2.75rem
+			background-position center
 			background-color #d8d8d8
 		.desc
 			display -webkit-box
@@ -68,6 +63,6 @@
 			color #333
 			line-height .54rem
 			font-size .39rem
-			height 1rem
+			height 1.1rem
 			background-color #fbfbfb
 </style>

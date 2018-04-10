@@ -1,6 +1,6 @@
 <template>
-	<div class="video-download-bottom">
-		<div class="video-download-banner">
+	<div class="video-download-bottom" v-if="!isIOS()">
+		<div @click="open" class="video-download-banner">
 			<span>{{$txt.TXT_2}}</span>
 			<img :src="vm.arrowSrc" />
 		</div>
@@ -17,14 +17,10 @@
 				},
 			}
 		},
-		props: {
-
-		},
-		computed: {
-
-		},
 		methods: {
-
+			open () {
+				this.activate()
+			}
 		}
 	}
 </script>
@@ -44,9 +40,8 @@
 			img
 				padding-left .14rem
 				position relative
-				top -0.03rem
+				top 0
 				vertical-align middle
-				/*width .44rem*/
 				height .32rem
 
 </style>

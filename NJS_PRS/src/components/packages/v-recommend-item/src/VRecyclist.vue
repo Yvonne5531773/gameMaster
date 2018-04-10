@@ -18,15 +18,13 @@
 
 		},
 		created () {
-			this.init()
+
 		},
 		computed: {
 
 		},
 		methods: {
-			init () {
 
-			},
 		}
 	}
 </script>

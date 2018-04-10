@@ -4,6 +4,8 @@ import { host } from 'config/index'
 import { setStore, getStore, createHexRandom } from 'utils/index'
 import PlayerConstructor from 'byted-toutiao-player'
 import weixin from '../weixin/index'
+import withApp from '../withApp/index'
+import ua from '../ua/index'
 
 export default {
 	...mapMutations(['SET_COMPONENT', 'SET_VIDEO_ID']),
@@ -13,7 +15,6 @@ export default {
 	},
 
 	setVideoId (videoId = '') {
-		console.log('setVideoId videoId', videoId)
 		this.SET_VIDEO_ID({videoId: videoId})
 	},
 
@@ -27,6 +28,10 @@ export default {
 
 	weixinInit () {
 		weixin.init()
+	},
+
+	isIOS () {
+		return ua.os.ios
 	},
 
 	getId (type) {
@@ -45,8 +50,29 @@ export default {
 		}
 		id = getStore(key)
 		id == '' && (id = createHexRandom(bit), setStore(key, id))
-		console.log('in getId id', id)
 		return id
+	},
+
+	activate (criteria = {}) {
+		if (ua.os.ios) {
+			new withApp.downloadApp(criteria)
+		} else {
+			if (ua.browser.qqbrowser) {
+				// QQ浏览器
+				// 根据时间戳判断用户是否安装了app，若安装了app，将直接打开app，下载逻辑将不执行
+				const loadDateTime = new Date();
+				setTimeout( () => {
+					const timeOutDateTime = new Date();
+					if (!loadDateTime || timeOutDateTime - loadDateTime < 510) {
+						new withApp.downloadApp(criteria)
+					}
+				}, 500)
+				// new withApp.wakeUpApp()
+			} else {
+				// new withApp.wakeUpApp()
+				new withApp.downloadApp(criteria)
+			}
+		}
 	},
 
 	addHttp (url) {

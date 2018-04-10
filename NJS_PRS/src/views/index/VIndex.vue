@@ -1,19 +1,20 @@
 <template>
 	<div class='index' ref="index">
-		<VBanner></VBanner>
+		<VBanner v-if="!isIOS()"></VBanner>
 		<VVideo></VVideo>
 		<VRecommend></VRecommend>
-		<VBottom></VBottom>
+		<VBottom v-if="!isIOS()"></VBottom>
 	</div>
 </template>
 <script>
+	import { request } from 'utils/index'
 	export default {
 		data() {
 			return {
 
 			}
 		},
-		mounted () {
+		created () {
 			this.init()
 		},
 		computed:{
@@ -21,8 +22,14 @@
 		},
 		methods: {
 			init () {
+				const videoId = this.getVideoId()
+				this.setVideoId(videoId)
 				//微信初始化
 //				this.weixinInit()
+			},
+			getVideoId () {
+				const param = 'newsid'
+				return request(param)
 			},
 		},
 	}

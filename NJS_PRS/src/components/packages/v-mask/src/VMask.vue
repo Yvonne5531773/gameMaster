@@ -1,9 +1,8 @@
 <template>
 	<div class="video-mask">
 		<div class="content">
-			<p>{{$txt.TXT_2}}</p>
-			<a class="play-btn">{{$txt.TXT_3}}</a>
-			<a class="download-btn">{{$txt.TXT_4}}</a>
+			<!--<p>{{$txt.TXT_2}}</p>-->
+			<a @click="replay" class="play-btn">{{$txt.TXT_3}}</a>
 		</div>
 	</div>
 </template>
@@ -11,24 +10,10 @@
 <script>
 	export default {
 		name: 'VMask',
-		data () {
-			return {
-
-			}
-		},
 		props: {
-
-		},
-		created () {
-			this.init()
-		},
-		computed: {
-
-		},
-		methods: {
-			init () {
-
-			},
+			replay: {
+				type: Function
+			}
 		}
 	}
 </script>
@@ -36,9 +21,9 @@
 <style lang="stylus">
 	.video-mask
 		position relative
-		margin-top .69rem
+		/*margin-top .69rem*/
 		width 100%
-		height 5.2rem
+		height 5.6rem
 		background-color rgba(0,0,0,0.8)
 		z-index 999
 		.content
@@ -61,12 +46,12 @@
 				-webkit-box-sizing border-box
 				box-sizing border-box
 				font-weight bolder
-				width 1.22rem
-				height .44rem
-				line-height .44rem
-				font-size .19rem
+				min-width 2.12rem
+				min-height .6rem
+				line-height .54rem
+				font-size .39rem
 			.play-btn
-				margin-right .44rem
+				margin-right .5rem
 				border 1px solid #ffffff
 				color #ffffff
 			.download-btn

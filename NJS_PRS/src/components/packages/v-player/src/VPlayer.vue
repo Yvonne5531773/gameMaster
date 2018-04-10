@@ -2,8 +2,8 @@
 	<div class="video-player">
 		<!--qq分享默认会取第一个img标签的src-->
 		<img class="avatar" :src="videoData.poster"/>
-		<div class="placeholder" :id="videoData.id"></div>
-		<VMask></VMask>
+		<VMask v-show="vm && vm.ended" :replay="replay"></VMask>
+		<div v-show="vm && !vm.ended" class="placeholder" :id="videoData.id"></div>
 	</div>
 </template>
 
@@ -12,7 +12,9 @@
 		name: 'VPlayer',
 		data () {
 			return {
-
+				vm: {
+					ended: false
+				}
 			}
 		},
 		props: {
@@ -45,17 +47,15 @@
 				return player
 			},
 			ready () {
-				console.log('in ready this.player', this.player)
-				console.log('in ready this.$ua', this.$ua)
 				const src = this.videoData.src
 				this.player.play(src).then(function (vjs) {
-					console.log('vjs', vjs)
 					vjs.preload('metadata')
 					vjs.volume(0.65)
 					window.vjs = vjs
 					window.isFullscreen = false
 					if (document.getElementsByTagName('video') && this.$ua.os.android) {
 						document.getElementsByTagName('video')[0].addEventListener('x5videoenterfullscreen', () => {
+							console.log('in x5videoenterfullscreen')
 							window.isFullscreen = true
 						})
 						document.getElementsByTagName('video')[0].addEventListener('x5videoexitfullscreen', () => {
@@ -66,46 +66,39 @@
 			},
 			hanleEvent (type) {
 				if (type === 'touchstart') {
-					this.isTouched = true
+					console.log('in touchstart')
 				}
 				if (type === 'touchend') {
-					this.isTouched = false
-//					if (this.$ua.os.ios && this.$ua.os.version >= 11) {
-//						setTimeout(() => {
-//							this.activateApp()
-//						}, 1000)
-//					} else {
-//						this.activateApp()
-//					}
+					console.log('in touchend')
+					//唤起APP
+					!this.isIOS() && this.activate({
+						skipDownload: true
+					})
 				}
 				if (type === 'play') {
 					console.log('in play')
-					if (!this.firstPlay) {
-
-					}
-					setTimeout(() => {
-//						if (window.group_id !== '6522816111426142728' && simplify.request('ft') !== '1') {
-//							this.showMask();
-//							this.play10s();
-//						}
-					}, 1000);
 				}
 				if (type === 'pause') {
-
+					console.log('in pause')
 				}
 				if (type === 'ended') {
-
+					console.log('in ended')
+					this.vm.ended = true
 				}
 				if (type === 'error') {
 					if (window.vjs.error().message) {
 						console.log('error: ', window.vjs.error().message)
 					}
 					if (!this.hasRetry) {
-						const player = this.init()
-						player.play()
-						this.hasRetry = true;
+						this.replay()
 					}
 				}
+			},
+			replay () {
+				this.player.config.autoplay = true
+				this.player.play(this.videoData.src)
+				this.vm.ended = false
+				this.hasRetry = true
 			}
 		}
 	}
