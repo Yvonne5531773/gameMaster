@@ -24,14 +24,13 @@ export default class downloadApp {
 	}
 
 	goMyapp (url) {
-		setTimeout( () => {
+		// setTimeout( () => {
 			location.href = url
-		}, 1000)
+		// }, 2* 1000)
 	}
 
 	//唤醒应用宝app
 	goMyappDownload () {
-		// console.log('in goMyappDownload')
 		// this.removeIframe()
 		setTimeout( () => {
 			const ele = this.getIframe()

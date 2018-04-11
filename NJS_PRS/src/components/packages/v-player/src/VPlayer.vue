@@ -57,7 +57,6 @@
 					window.isFullscreen = false
 					if (document.getElementsByTagName('video') && this.$ua.os.android) {
 						document.getElementsByTagName('video')[0].addEventListener('x5videoenterfullscreen', () => {
-							console.log('in x5videoenterfullscreen')
 							window.isFullscreen = true
 						})
 						document.getElementsByTagName('video')[0].addEventListener('x5videoexitfullscreen', () => {

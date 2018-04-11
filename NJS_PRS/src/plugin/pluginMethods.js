@@ -23,7 +23,6 @@ export default {
 	},
 
 	fetch (url = '', data = {}, type = 'GET', method = 'fetch') {
-		console.log('in fetch url', url)
 		return worker.work(url, data, type, method)
 	},
 
@@ -129,7 +128,6 @@ export default {
 		if(!infoc) return
 		const cate = await this.getNetwork(),
 			network = this.getNetworkType(cate)
-		console.log('in report network', network)
 		const system = ua.os.ios? 2 : (ua.os.android? 1 : 3),
 			source = 0,
 			uptime = Date.parse(new Date(getOperationFullTime(new Date())))/1000,
@@ -143,7 +141,6 @@ export default {
 			}
 		_.assignIn(obj, criteria)
 		infoc.report(obj)
-		console.log('report obj', obj)
 	},
 
 	addHttp (url) {

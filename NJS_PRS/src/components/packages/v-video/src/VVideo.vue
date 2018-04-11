@@ -54,7 +54,6 @@
 				let videoData
 				try {
 					videoData = await this.fetch(url)
-					console.log('video videoData:', videoData)
 				} catch (e) {
 					console.log('video error:', e)
 				}

@@ -16,7 +16,6 @@ export default class wakeUpApp {
 	}
 
 	androidToNative () {
-		console.log('in androidToNative')
 		this.removeIframe()
 		const ele = this.getIframe()
 		window.document.body.appendChild(ele)
