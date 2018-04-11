@@ -13,7 +13,8 @@
 		data () {
 			return {
 				vm: {
-					ended: false
+					ended: false,
+					firstPlay: true,
 				}
 			}
 		},
@@ -23,6 +24,7 @@
 			}
 		},
 		mounted () {
+			if(_.isEmpty(this.videoData)) return
 			this.player = this.init()
 			this.ready()
 		},
@@ -65,24 +67,22 @@
 				}.bind(this))
 			},
 			hanleEvent (type) {
-				if (type === 'touchstart') {
-					console.log('in touchstart')
-				}
+//				if (type === 'touchstart') {
+//
+//				}
 				if (type === 'touchend') {
-					console.log('in touchend')
 					//唤起APP
 					!this.isIOS() && this.activate({
 						skipDownload: true
 					})
 				}
 				if (type === 'play') {
-					console.log('in play')
+					this.vm.firstPlay && (this.report({action: 5}), this.vm.firstPlay = false)
 				}
-				if (type === 'pause') {
-					console.log('in pause')
-				}
+//				if (type === 'pause') {
+//
+//				}
 				if (type === 'ended') {
-					console.log('in ended')
 					this.vm.ended = true
 				}
 				if (type === 'error') {

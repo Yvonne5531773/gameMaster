@@ -2,7 +2,7 @@
 	<section class="banner-container banner-top">
 		<div :class="{'banner-pannel pannel-top show-top-pannel':!vm.hideBanner, 'banner-pannel pannel-top hide-top-pannel':vm.hideBanner}">
 			<div v-if="slides" class="slider-container" :style="containerStyle">
-				<div :class="slideListClass" :style="slideListStyle">
+				<div @click="clickBanner" :class="slideListClass" :style="slideListStyle">
 					<VBannerItem :key="index" :item="slide" :itemStyle="itemStyle" :current="index===vm.currentIndex+1" :touchstart="handleStart" :touchmove="handleMove" :touchend="handleEnd" v-for="(slide, index) in vm.slideList"></VBannerItem>
 				</div>
 				<div class="slider-dot-list" v-show="slides&&slides.length>1">
@@ -40,9 +40,10 @@
 					first: true
 				}],
 				slides: null,
-				minWidth: 100,
+				minWidth: 130,
 				intervalTime: 3* 1000,
 				animationTime: .5* 1000,
+				itemStyle: ''
 			}
 		},
 		props: {
@@ -70,16 +71,15 @@
 			slideListStyle () {
 				const width = this.width || window.innerWidth,
 					translateX = -(this.vm.currentIndex + 1) * width + this.vm.move.x
+				this.itemStyle = {
+					width: width+'px'
+				}
 				return {
 					width: width* this.vm.slideList.length + 'px',
 					transform: `translate3d(${translateX}px, 0, 0)`,
 					WebkitTransform: `translate3d(${translateX}px, 0, 0)`,
 				}
 			},
-			itemStyle () {
-				const width = this.width || window.innerWidth
-				return {width: width+'px'}
-			}
 		},
 		methods: {
 			async init () {
@@ -103,7 +103,7 @@
 				try {
 					bannerData = await this.fetch(url)
 				} catch (e) {
-					console.log('error:', e)
+					console.log('banner error:', e)
 				}
 				return !_.isEmpty(bannerData)? bannerData.data : []
 			},
@@ -176,9 +176,17 @@
 			initBannerScroll () {
 				window.addEventListener('scroll', this.scrollFun.bind(this))
 			},
+			clickBanner () {
+				let action
+				this.vm.currentIndex===0 && (action = 2)
+				this.vm.currentIndex===1 && (action = 3)
+				this.vm.currentIndex===2 && (action = 4)
+				this.vm.currentIndex===3 && (action = 5)
+				this.report({action: action})
+			},
 			destroyed () {
 				window.removeEventListener('scroll', this.scrollFun.bind(this))
-			}
+			},
 		}
 	}
 </script>

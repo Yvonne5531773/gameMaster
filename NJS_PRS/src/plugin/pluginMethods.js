@@ -1,11 +1,15 @@
 import { mapMutations } from 'vuex'
 import { worker } from 'api/worker'
-import { host } from 'config/index'
+import { host, report } from 'config/index'
 import { setStore, getStore, createHexRandom, getOperationFullTime } from 'utils/index'
 import PlayerConstructor from 'byted-toutiao-player'
 import weixin from '../weixin/index'
 import withApp from '../withApp/index'
 import ua from '../ua/index'
+import wx from '../../static/js/weixin_jssdk'
+require('../report/index')
+
+const infoc = window.Infoc? window.Infoc.b(report.key, report.name) : null
 
 export default {
 	...mapMutations(['SET_COMPONENT', 'SET_VIDEO_ID']),
@@ -18,8 +22,9 @@ export default {
 		this.SET_VIDEO_ID({videoId: videoId})
 	},
 
-	fetch (url = '', data = {}) {
-		return worker.work(url, data)
+	fetch (url = '', data = {}, type = 'GET', method = 'fetch') {
+		console.log('in fetch url', url)
+		return worker.work(url, data, type, method)
 	},
 
 	getPlayer (criteria) {
@@ -75,22 +80,70 @@ export default {
 		}
 	},
 
-	report (criteria) {
+	getNetwork () {
+		if (ua.browser.weixin) {
+			return new Promise(resolve => {
+				setTimeout( () => {
+					wx.getNetworkType({
+						success: function (res) {
+							resolve(res.networkType)
+						}
+					})
+				}, 100)
+			})
+		} else {
+			const connection = (typeof navigator !== 'undefined' && navigator.connection) || null
+			return connection&&connection.effectiveType? connection.effectiveType:''
+		}
+	},
+
+	getNetworkType (cate) {
+		let type = 32
+		switch (cate) {
+			case 'wifi':
+				type = 3
+				break;
+			case '4g':
+				type = 16
+				break;
+			case '2g':
+				type = 4
+				break;
+			case  '3g':
+				type = 8
+				break;
+			case  'ethernet':
+				type = 2
+				break;
+			case  'none':
+				type = 64
+				break;
+			case  'default':
+				type = 26
+				break;
+		}
+		return type
+	},
+
+	async report (criteria) {
+		if(!infoc) return
+		const cate = await this.getNetwork(),
+			network = this.getNetworkType(cate)
+		console.log('in report network', network)
 		const system = ua.os.ios? 2 : (ua.os.android? 1 : 3),
-			source = '',
-			network = wx.getNetworkType({
-				success: function (res) {
-					var networkType = res.networkType // 返回网络类型2g，3g，4g，wifi
-				}
-			}),
-			uptime = getOperationFullTime(new Date()),
+			source = 0,
+			uptime = Date.parse(new Date(getOperationFullTime(new Date())))/1000,
+			download = 0,
 			obj = {
 				system: system,
 				source: source,
-				network: network,
-				uptime: uptime
+				download: download,
+				network: network || 32,
+				uptime2: uptime
 			}
 		_.assignIn(obj, criteria)
+		infoc.report(obj)
+		console.log('report obj', obj)
 	},
 
 	addHttp (url) {

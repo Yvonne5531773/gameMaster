@@ -15,8 +15,7 @@ export default class downloadApp {
 		if (ua.os.android) { //Android
 			if (ua.browser.weixin) {
 				this.goMyapp(app.gm)
-			} else {
-				// 安卓非微信 调起应用宝
+			} else { // 安卓 非微信 调起应用宝
 				this.goMyappDownload()
 			}
 		} else {
@@ -25,13 +24,15 @@ export default class downloadApp {
 	}
 
 	goMyapp (url) {
-		location.href = url
+		setTimeout( () => {
+			location.href = url
+		}, 1000)
 	}
 
 	//唤醒应用宝app
 	goMyappDownload () {
-		console.log('in goMyappDownload')
-		this.removeIframe()
+		// console.log('in goMyappDownload')
+		// this.removeIframe()
 		setTimeout( () => {
 			const ele = this.getIframe()
 			window.document.body.appendChild(ele)

@@ -51,9 +51,15 @@
 						contentid: videoId,
 						model: model
 					})
-				const videoData = await this.fetch(url)
+				let videoData
+				try {
+					videoData = await this.fetch(url)
+					console.log('video videoData:', videoData)
+				} catch (e) {
+					console.log('video error:', e)
+				}
 				this.setVideoId(videoId)
-				!_.isEmpty(videoData) && (this.videoData = this.dto(videoData.data[0]))
+				this.videoData = !_.isEmpty(videoData)? this.dto(videoData.data[0]):{}
 			},
 			storeVideoData () {
 				const key = 'VIDEO_DATA'

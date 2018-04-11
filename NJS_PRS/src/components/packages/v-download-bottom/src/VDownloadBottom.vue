@@ -20,6 +20,7 @@
 		methods: {
 			open () {
 				this.activate()
+				this.report({action: 6})
 			}
 		}
 	}

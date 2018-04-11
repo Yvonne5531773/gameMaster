@@ -18,7 +18,11 @@ const routerMode = 'hash', //history | hash
 		gm: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.cmcm.gamemaster',
 		myapp: 'tmast://appdetails?r=0.27985643851570785&pname=com.cmcm.gamemaster&oplist=1%3B2&via=ANDROIDWXZ.YYB.OTHERBROWSER&channelid=000116083232363434363139&appid=213141',
 		downloadLink: 'http://imtt.dd.qq.com/16891/FA3FC96AD4B50FA556C77AB04D3371DD.apk?fsname=com.cmcm.gamemaster_1.1.7_10170008.apk&csr=1bbd',
-		gmNativeLink: '',
+		gmNativeLink: 'gamemaster://mainactivity/jump',
+	},
+	report = {
+		key: 'gameMaster',
+		name: 'gamemaster_share_web:192 action:byte system:byte source:byte download:byte network:byte uptime2:int',
 	}
 
 if (process.env.NODE_ENV === 'development') {
@@ -33,5 +37,6 @@ export {
 	restoreOnStartup,
 	weixin,
 	urls,
-	app
+	app,
+	report
 }

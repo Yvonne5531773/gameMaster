@@ -59,7 +59,12 @@ http://cn2.cmcm.com/cm/gamemaster/index.html
 3：详情页分享
 http://g.news.liebao.cn/detail.html?newsid=aZiNbVl9VHKeDngbDTKsgQ
 
+~~~
+
+~~~
+1.APIs 
 详情：http://g.m.liebao.cn/news/detail
 相关推荐：http://g.m.liebao.cn/news/recommend
 评论：http://svcn.cm.ksmobile.net/comment/get
 顶部banner新闻：http://g.m.liebao.cn/news/fresh?act=3&scenario=0x00000101&lan=zh_CN&osv=7.1.1&appv=1.1.2&app_lan=zh_CN&ch=0&pid=17&action=0x1b&offset=&count=3&pf=web&net=wifi&v=4&mnc=00&ctype=0x267&display=0x07&mode=1&brand=OPPO&mcc=460&nmnc=00&nmcc=460&aid=8918340b3a2a7e81&model=OPPO+R11
+~~~

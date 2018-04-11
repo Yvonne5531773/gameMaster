@@ -60,7 +60,12 @@
 						contentid: videoId,
 						model: model
 					})
-				const recommendData = await this.fetch(url)
+				let recommendData
+				try {
+					recommendData = await this.fetch(url)
+				} catch (e) {
+					console.log('recommend error', e)
+				}
 				return !_.isEmpty(recommendData)? recommendData.data:[]
 			},
 			dto (data) {

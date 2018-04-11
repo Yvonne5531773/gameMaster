@@ -2,15 +2,15 @@
  * Created by lica4 on 4/11/2018.
  */
 (function () {
-	var browser = "other",
+	let browser = "other",
 		system = "other",
 		device = "PC";
-	var pf = navigator.platform,
+	let pf = navigator.platform,
 		ua = navigator.userAgent,
 		href = window.location.href,
 		locSearch = window.location.search;
-	var root = "/";
-	var WinMap = {
+	let root = "/";
+	let WinMap = {
 		"windows nt 5.0": "Win2000",
 		"windows 2000": "Win2000",
 		"windows nt 5.1": "WinXP",
@@ -26,7 +26,7 @@
 		"windows nt 6.3": "Win8.1",
 		"windows 8.1": "Win8.1"
 	};
-	var sysMap = {
+	let sysMap = {
 		"win32": WinMap,
 		"windows": WinMap,
 		"android": "Android",
@@ -40,7 +40,7 @@
 	};
 
 	function createUUID(isClient) {
-		var s = [],
+		let s = [],
 			hexDigits = "0123456789abcdef",
 			i, uuid;
 		for (i = 0; i < 36; i++) {
@@ -57,9 +57,9 @@
 		return uuid
 	}
 	function buildQuery(obj) {
-		var i, arr = [];
+		let i, arr = [];
 		if (typeof obj === "object") {
-			for (i in obj) {
+			for (let i in obj) {
 				if (obj.hasOwnProperty(i)) {
 					arr.push(i + "=" + encodeURIComponent(obj[i] == null ? "" : obj[i] + ""))
 				}
@@ -69,10 +69,10 @@
 	}
 	function addnew(a1, a2, a3) {
 		if (typeof a1 === "string") {
-			var nod = document.createElement(a1);
+			let nod = document.createElement(a1);
 			if (typeof a2 === "string") {
-				var ar2 = a2.split(" ");
-				for (var i = 0, n = ar2.length, ar3; i < n; i++) {
+				let ar2 = a2.split(" ");
+				for (let i = 0, n = ar2.length, ar3; i < n; i++) {
 					ar3 = ar2[i].split("=");
 					if (ar3.length === 2) {
 						nod.setAttribute(ar3[0], ar3[1].replace(/\:\:/gi, " ").replace(/\"/gi, "").replace(/\'/gi, ""))
@@ -80,7 +80,7 @@
 				}
 			} else {
 				if (typeof a2 === "object") {
-					for (var key in a2) {
+					for (let key in a2) {
 						if (typeof (a2[key]) === "string") {
 							nod.setAttribute(key, a2[key])
 						}
@@ -93,15 +93,15 @@
 		}
 	}
 	function create(url) {
-		var el = addnew("img");
+		let el = addnew("img");
 		el.style.display = "none";
 		el.src = url;
 		document.body.appendChild(el);
 	}
 	function initialize() {
-		var lua = ua.toLowerCase(),
+		let lua = ua.toLowerCase(),
 			match, version;
-		for (i in sysMap) {
+		for (let i in sysMap) {
 			if (sysMap.hasOwnProperty(i) && lua.indexOf(i) > -1) {
 				if (typeof sysMap[i] === "object") {
 					for (j in sysMap[i]) {
@@ -166,7 +166,7 @@
 		},
 		addParams: function (obj) {
 			if (typeof obj === "object") {
-				for (i in obj) {
+				for (let i in obj) {
 					if (obj.hasOwnProperty(i)) {
 						if (typeof i === "string" || typeof i === "number") {
 							this.params[i] = obj[i]
@@ -180,7 +180,7 @@
 			if (typeof obj !== "object") {
 				return
 			}
-			var i, url;
+			let i, url;
 			for (i in this.params) {
 				if (this.params.hasOwnProperty(i)) {
 					if (typeof obj[i] === "undefined") {
@@ -208,7 +208,7 @@
 		}
 	};
 	Infoc.queryString = function (name) {
-		var i = 0,
+		let i = 0,
 			params = {}, key, value, pos, search = locSearch ? locSearch.substr(1).split("&") : [];
 		for (; i < search.length; i++) {
 			pos = search[i].indexOf("=");
@@ -221,8 +221,8 @@
 		return params[name] ? params[name] : undefined
 	};
 	Infoc.getUUID = function (isClient) {
-		var key = isClient ? "infoc_client_uuid" : "infoc_uuid";
-		uuid = Infoc.cookie(key);
+		let key = isClient ? "infoc_client_uuid" : "infoc_uuid",
+			uuid = Infoc.cookie(key);
 		if (!uuid) {
 			uuid = createUUID(isClient);
 			Infoc.cookie(key, uuid, {
@@ -239,10 +239,10 @@
 		return name != null ? cookie[value === undefined ? "get" : "set"].apply(null, arguments) : undefined
 	}
 	cookie.get = function (name) {
-		var ret, arr, i, len;
+		let ret, arr, i, len;
 		if (document.cookie) {
 			arr = document.cookie.split("; ");
-			for (i = 0, len = arr.length; i < len; i++) {
+			for (let i = 0, len = arr.length; i < len; i++) {
 				if (arr[i].indexOf(name + "=") === 0) {
 					ret = decodeURIComponent(arr[i].substr(name.length + 1));
 					break
@@ -252,7 +252,7 @@
 		return ret
 	};
 	cookie.set = function (name, value, options) {
-		var arr = [],
+		let arr = [],
 			date;
 		options = options || {};
 		if (value == null) {
@@ -277,23 +277,23 @@
 	Infoc.cookie = cookie
 })();
 (function () {
-	var infoc2 = "http://infoc2.duba.net/g/v1/",
+	let infoc2 = "http://infoc2.duba.net/g/v1/",
 		f = Infoc.queryString("f") || "",
 		device = Infoc.getDevice(),
 		uuid = Infoc.getUUID(true),
 		isHttps = (window.location.protocol === "https:" ? true : false);
 	Infoc.b = function (project, dat) {
-		var map = projectMap[project];
+		let map = projectMap[project];
 		if (!map) {
 			return false
 		}
 		if (isHttps && !map.httpsUrl) {
 			return false
 		}
-		var obj = new Infoc((isHttps ? map.httpsUrl : map.url), map.params);
+		let obj = new Infoc((isHttps ? map.httpsUrl : map.url), map.params);
 		if (dat) {
 			if (typeof dat === "string") {
-				var arr = dat.split(" "),
+				let arr = dat.split(" "),
 					i = 0,
 					len = arr.length,
 					params = {}, key, value;
@@ -319,7 +319,7 @@
 		}
 		return obj
 	};
-	var dubaMap = {
+	let dubaMap = {
 		url: infoc2,
 		httpsUrl: "https://helpduba1.ksmobile.com/g/v1/",
 		params: {
@@ -340,7 +340,7 @@
 			usertype_public: 0
 		}
 	};
-	var daohangMap = {
+	let daohangMap = {
 		url: infoc2,
 		httpsUrl: "https://helpdhsite2.ksmobile.com/g/v1/",
 		params: {
@@ -357,7 +357,7 @@
 			referer: document.referrer || ""
 		}
 	};
-	var cmMap = {
+	let cmMap = {
 		url: infoc2,
 		httpsUrl: "https://helpf.ksmobile.com/g/v1/",
 		params: {
@@ -387,8 +387,8 @@
 			iid: 0,
 			accountid: ""
 		}
-	};
-	var liebaoMap = {
+	}
+	let liebaoMap = {
 		url: infoc2,
 		httpsUrl: "http://helpliebao1.ksmobile.com/g/v1/",
 		params: {
@@ -411,14 +411,49 @@
 			wtod2: "",
 			usertype_public: 0
 		}
-	};
-	var projectMap = {
+	}
+	const gameMasterMap = {
+		url: 'http://helpgamemaster1.ksmobile.com/g/v1/',
+		// url: infoc2,
+		httpsUrl: "https://helpgamemaster1.ksmobile.com/g/v1/",
+		params: {
+			product_no: 199,
+			public_index: 1,
+			uuid: uuid,
+			ver: 1,
+			mcc: 0,
+			mnc: 0,
+			cl: '',
+			cn: 0,
+			prodid: 0,
+			xaid: '',
+			uptime: 0,
+			root2: 0,
+			capi: 0,
+			brand2: '',
+			model2: '',
+			serial2: '',
+			cn2: '',
+			rom: '',
+			rom_ver: '',
+			host_ver: 0,
+			plugin_vers: '',
+			built_chnelid: '',
+			utc: 0,
+			iid: 0,
+			accountid: '',
+			adid: '',
+			able_uninst: 0
+		}
+	}
+	let projectMap = {
 		db: dubaMap,
 		duba: dubaMap,
 		daohang: daohangMap,
 		dh: daohangMap,
 		cm: cmMap,
 		liebao: liebaoMap,
-		lb: liebaoMap
+		lb: liebaoMap,
+		gameMaster: gameMasterMap,
 	}
 })();

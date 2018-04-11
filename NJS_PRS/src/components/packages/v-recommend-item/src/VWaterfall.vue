@@ -24,6 +24,7 @@
 			},
 			open (item) {
 				if(!item) return
+				this.report({action: 8})
 				const newsid = item.contentid
 				this.isIOS() && (location.href = `/index?${toQuery({newsid: newsid})}`)
 				!this.isIOS() && this.activate()

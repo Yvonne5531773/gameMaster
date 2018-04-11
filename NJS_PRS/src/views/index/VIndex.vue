@@ -9,23 +9,19 @@
 <script>
 	import { request } from 'utils/index'
 	export default {
-		data() {
-			return {
-
-			}
-		},
 		created () {
 			this.init()
 		},
-		computed:{
-
-		},
 		methods: {
-			init () {
+			async init () {
 				const videoId = this.getVideoId()
 				this.setVideoId(videoId)
 				//微信初始化
 //				this.weixinInit()
+				//展示上报
+				this.report({
+					action: 1
+				})
 			},
 			getVideoId () {
 				const param = 'newsid'

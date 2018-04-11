@@ -21,6 +21,7 @@
     "vue-router": "^2.8.1",
     "vuex": "^2.5.0",
     "webpack-jarvis": "^0.3.0",
+    "whatwg-fetch": "^2.0.4",
     "workerize": "^0.1.7"
   },
   "devDependencies": {
