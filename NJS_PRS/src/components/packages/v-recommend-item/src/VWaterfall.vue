@@ -18,6 +18,11 @@
 				type: Array
 			}
 		},
+		watch: {
+			'$route' (to, from) {
+				location.reload()
+			}
+		},
 		methods: {
 			getAvatar (item) {
 				return {
@@ -28,7 +33,6 @@
 				if(!item) return
 				this.report({action: 8})
 				const newsid = item.contentid,
-					nhref = `#/player?${toQuery({newsid: newsid})}`,
 					urlObj = {
 						path: 'player',
 						query: {
@@ -36,8 +40,7 @@
 						}
 					}
 				this.setVideoId(newsid)
-//				this.isIOS() && (window.location.href = nhref, location.reload())
-				this.isIOS() && (this.$router.push(urlObj), location.reload())
+				this.isIOS() && (this.$router.push(urlObj))
 				!this.isIOS() && this.activate()
 			}
 		}

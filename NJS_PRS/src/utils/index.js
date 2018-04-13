@@ -214,7 +214,7 @@ export const appendQuery = (url, query) => {
  * @return 根据参数不同，要返回不同的结果，object或者字符串
  */
 export const request = (paras) => {
-	var url = location.hash;
+	var url = location.search;
 	var paraString = url.substring(1).split("&");
 	var paraObj = {};
 	for (var i = 0, len=paraString.length; i < len; i++) {
@@ -223,7 +223,6 @@ export const request = (paras) => {
 			paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
 		}
 	}
-
 	if(!paras) return paraObj;
 	var returnValue = paraObj[paras.toLowerCase()];
 	return returnValue ? returnValue.trim() : "";
@@ -232,7 +231,6 @@ export const request = (paras) => {
 export const hash = () => {
 	var s = location.hash.substr(1),
 		hashQuery = {};
-
 	if (s) {
 		var arr = s.split("&");
 		for (var i = 0; i < arr.length; i++) {
@@ -240,11 +238,9 @@ export const hash = () => {
 			hashQuery[t[0]] = t[1]
 		}
 	}
-
 	if (typeof arguments[0] == "string") {
 		return hashQuery[arguments[0]]
 	}
-
 	if (typeof arguments[0] == "object") {
 		for (var k in arguments[0]) {
 			hashQuery[k] = arguments[0][k]

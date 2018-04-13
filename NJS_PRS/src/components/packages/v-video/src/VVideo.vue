@@ -1,9 +1,7 @@
 <template>
 	<section class="video-container" ref="video">
 		<div class="video-content">
-			<keep-alive>
-				<component v-if="videoData" :is='current' :videoData="videoData"></component>
-			</keep-alive>
+			<component v-if="videoData" :is='current' :videoData="videoData"></component>
 		</div>
 		<VDownloadBottom></VDownloadBottom>
 		<VVideoHeader v-if="videoData" :title="videoData.title"></VVideoHeader>
@@ -58,16 +56,16 @@
 				try {
 					videoData = await this.fetch(url)
 				} catch (e) {
-					console.log('video error:', e)
+					console.log('fetch video error:', e)
 				}
 				this.setVideoId(videoId)
-				this.videoData = !_.isEmpty(videoData)? this.dto(videoData.data[0]):{}
+				this.videoData = !_.isEmpty(videoData)&&!_.isEmpty(videoData.data)? this.dto(videoData.data[0]):{}
 			},
 			dto (data) {
 				if(!data) return
 				const img = !_.isEmpty(data.images)? data.images[0] : '',
-					src = data.originalurl,
-					title = data.title
+					src = !_.isEmpty(data.bodyvideos)? data.bodyvideos[0].url:'',
+					title = data.title? data.title:''
 				return {
 					id: `v${Math.random()}`.slice(3).toString(16).slice(0, 4),
 					poster: img,

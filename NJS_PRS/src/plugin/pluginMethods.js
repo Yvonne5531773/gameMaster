@@ -1,7 +1,7 @@
 import { mapMutations } from 'vuex'
 import { worker } from 'api/worker'
 import { host, report } from 'config/index'
-import { setStore, getStore, createHexRandom, getOperationFullTime } from 'utils/index'
+import { request, setStore, getStore, createHexRandom, getOperationFullTime } from 'utils/index'
 import PlayerConstructor from 'byted-toutiao-player'
 import weixin from '../weixin/index'
 import withApp from '../withApp/index'
@@ -124,12 +124,41 @@ export default {
 		return type
 	},
 
+	getSource () {
+		const key = 'from',
+			value = request(key)
+		let ret = 0
+		switch (value) {
+			//朋友圈
+			case 'timeline':
+				ret = 2
+				break;
+			//微信群
+			case 'groupmessage':
+				ret = 5
+				break;
+			//QQ好友
+			// case '':
+			// 	ret = 3
+			// 	break;
+			// //QQ控件
+			// case '':
+			// 	ret = 4
+			// 	break;
+			//好友分享(包括QQ，微信)
+			case 'singlemessage':
+				ret = 1
+				break;
+		}
+		return value
+	},
+
 	async report (criteria) {
 		if(!infoc) return
 		const cate = await this.getNetwork(),
 			network = this.getNetworkType(cate)
 		const system = ua.os.ios? 2 : (ua.os.android? 1 : 3),
-			source = 0,
+			source = this.getSource(),
 			uptime = Date.parse(new Date(getOperationFullTime(new Date())))/1000,
 			download = 0,
 			obj = {

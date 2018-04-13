@@ -1,6 +1,6 @@
 import App from '../App'
 
-const index = r => require.ensure([], () => r(require('../views/index/VIndex')), 'index')
+const player = r => require.ensure([], () => r(require('../views/index/VIndex')), 'player')
 
 export default [{
 	path: '/',
@@ -12,7 +12,7 @@ export default [{
 		},
 		{
 			path: '/player',
-			component: index,
+			component: player,
 		},
 	]
 }]

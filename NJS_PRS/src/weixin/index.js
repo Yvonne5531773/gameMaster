@@ -18,15 +18,17 @@ function getShareLink () {
 		location.hash,
 	].join('');
 
-	if (!location.hash) {
-		url = url + '?wxshare_count=2';
-	} else if (location.hash.indexOf('wxshare_count=') === -1) {
-		url = url.replace(location.hash, location.hash + '&wxshare_count=2');
-	} else {
-		let count = request('wxshare_count') || '0';
-		count = count ? parseInt(count) + 1 : 0;
-		url = url.replace('wxshare_count=' + request('wxshare_count'), 'wxshare_count=' + count);
-	}
+	// 统计微信上分享的次数
+	// if (!location.hash) {
+	// 	url = url + '?wxshare_count=2';
+	// } else if (location.hash.indexOf('wxshare_count=') === -1) {
+	// 	url = url.replace(location.hash, location.hash + '&wxshare_count=2');
+	// } else {
+	// 	let count = hash('wxshare_count') || '0';
+	// 	count = count ? parseInt(count) + 1 : 0;
+	// 	url = url.replace('wxshare_count=' + hash('wxshare_count'), 'wxshare_count=' + count);
+	// }
+
 	return url;
 }
 

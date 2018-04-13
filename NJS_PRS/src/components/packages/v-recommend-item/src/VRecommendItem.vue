@@ -7,9 +7,7 @@
 				<span class="item-top-right" v-if="!isIOS()">{{$txt.TXT_9}}</span>
 			</div>
 		</div>
-		<keep-alive>
-			<component v-if="vm.data" :is='current' :data="vm.data"></component>
-		</keep-alive>
+		<component v-if="vm.data" :is='current' :data="vm.data"></component>
 	</div>
 </template>
 
@@ -68,7 +66,7 @@
 				try {
 					recommendData = await this.fetch(url)
 				} catch (e) {
-					console.log('recommend error', e)
+					console.log('fetch recommend error', e)
 				}
 				return !_.isEmpty(recommendData)? recommendData.data:[]
 //				return recommends[0].data
