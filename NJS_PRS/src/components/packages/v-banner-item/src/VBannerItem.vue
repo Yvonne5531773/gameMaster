@@ -8,7 +8,7 @@
         <p class="title" v-if="!item.first">{{item.title | clip(54)}}</p>
         <img class="game-master-txt-pic" :src="gameMasterTxtPic" v-else/>
       </div>
-      <img class="bg-pic" :src="bgPic" v-if="item.first"/>
+      <!--<img class="bg-pic" :src="bgPic" v-if="item.first"/>-->
       <div class="open">{{openTxt}}</div>
     </a>
   </div>
@@ -93,7 +93,7 @@
           min-width 1.39rem
           height 1.39rem
       .banner-label
-        margin .21rem .7rem 0 .35rem
+        margin .15rem .7rem 0 .35rem
         -webkit-box-flex 1
         -ms-flex-positive 1
         flex-grow 1
@@ -124,9 +124,9 @@
         line-height .66rem
         min-width 1.33rem
         height .61rem
-        color #176AFF
-        background-color #fff
-        box-shadow:0 .03rem .33rem 0 rgba(0,0,0,0.27)
+        color #fff
+        background-color #009aff
+        box-shadow 0 .03rem .33rem 0 rgba(0,0,0,0.27)
       .bg-pic
         position absolute
         width 100%

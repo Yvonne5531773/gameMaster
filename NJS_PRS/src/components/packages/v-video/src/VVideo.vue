@@ -28,7 +28,10 @@
 		},
 		async created () {
 			await this.init()
-			this.storeVideoData()
+			//微信初始化
+			this.initWeixin(this.videoData)
+			//头文件初始化
+			this.initHeadInfo()
 		},
 		computed: {
 			...mapState(['videoId']),
@@ -60,10 +63,6 @@
 				this.setVideoId(videoId)
 				this.videoData = !_.isEmpty(videoData)? this.dto(videoData.data[0]):{}
 			},
-			storeVideoData () {
-				const key = 'VIDEO_DATA'
-				setStore(key, JSON.stringify(this.videoData))
-			},
 			dto (data) {
 				if(!data) return
 				const img = !_.isEmpty(data.images)? data.images[0] : '',
@@ -76,6 +75,19 @@
 					description: title,
 					title: title,
 				}
+			},
+			initHeadInfo () {
+				const children = document.getElementsByTagName('head')[0].children,
+					ele = document.createElement('meta'),
+					firstImage = document.createElement('img'),
+					titleEle = _.find(children, {tagName: 'TITLE'})
+				ele.name = 'description'
+				ele.content = _.has(this.videoData, 'description')? this.videoData.description:''
+				firstImage.src = _.has(this.videoData, 'poster')? this.videoData.poster:''
+				document.getElementsByTagName('head')[0].appendChild(ele)
+				firstImage.style.display = 'none'
+				document.body.insertBefore(firstImage, document.body.firstChild)
+				this.videoData.title && (titleEle.innerHTML = this.videoData.title)
 			}
 		}
 	}

@@ -30,8 +30,8 @@ export default {
 		return new PlayerConstructor(criteria)
 	},
 
-	weixinInit () {
-		weixin.init()
+	initWeixin (data) {
+		weixin.init(data)
 	},
 
 	isIOS () {
@@ -141,11 +141,5 @@ export default {
 			}
 		_.assignIn(obj, criteria)
 		infoc.report(obj)
-	},
-
-	addHttp (url) {
-		if(url){
-			return !~url.indexOf('http')? 'http:'+url : url
-		}
 	}
 }

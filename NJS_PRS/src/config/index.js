@@ -6,7 +6,7 @@ const routerMode = 'hash', //history | hash
 	restoreOnStartup = 4,
 	weixin = {
 		appid: 'wxe295c6faa48c17d5',
-		debug: false,
+		debug: true,
 		swapTitleInWX: true
 	},
 	urls = {

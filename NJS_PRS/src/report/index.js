@@ -104,7 +104,7 @@
 		for (let i in sysMap) {
 			if (sysMap.hasOwnProperty(i) && lua.indexOf(i) > -1) {
 				if (typeof sysMap[i] === "object") {
-					for (j in sysMap[i]) {
+					for (let j in sysMap[i]) {
 						if (sysMap[i].hasOwnProperty(j) && lua.indexOf(j) > -1) {
 							system = sysMap[i][j];
 							break

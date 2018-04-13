@@ -1,5 +1,5 @@
 <template>
-	<div class='index' ref="index">
+	<div class='v-index'>
 		<VBanner v-if="!isIOS()"></VBanner>
 		<VVideo></VVideo>
 		<VRecommend></VRecommend>
@@ -8,31 +8,39 @@
 </template>
 <script>
 	import { request } from 'utils/index'
+	import adapter from '../../adapter/index'
+
 	export default {
 		created () {
 			this.init()
 		},
 		methods: {
 			async init () {
-				const videoId = this.getVideoId()
-				this.setVideoId(videoId)
-				//微信初始化
-//				this.weixinInit()
+				//页面初始化
+				new adapter()
+
+				//video id初始化
+				this.initVideoId()
+
 				//展示上报
 				this.report({
 					action: 1
 				})
 			},
-			getVideoId () {
-				const param = 'newsid'
-				return request(param)
+			initVideoId () {
+//				const param = 'newsid',
+//					videoId = request(param)
+//				this.setVideoId(videoId)
+				const videoId = this.$route.query.newsid
+//					videoId = request(param)
+				this.setVideoId(videoId)
 			},
 		},
 	}
 </script>
 
 <style lang='stylus' scoped>
-	.index
+	.v-index
 		position absolute
 		margin 0
 		padding 0

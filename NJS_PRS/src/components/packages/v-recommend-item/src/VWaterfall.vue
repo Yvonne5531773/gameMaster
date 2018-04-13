@@ -2,7 +2,9 @@
 	<div class="recommend-waterfall">
 		<div @click="open(item)" class="waterfall-item" :key="index" v-for="(item, index) in data">
 			<div class="video-avatar" :style="getAvatar(item)"></div>
-			<div class="desc">{{item.desc | clip(40)}}</div>
+			<div class="desc">
+				<p>{{item.desc | clip(40)}}</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -25,8 +27,17 @@
 			open (item) {
 				if(!item) return
 				this.report({action: 8})
-				const newsid = item.contentid
-				this.isIOS() && (location.href = `/index?${toQuery({newsid: newsid})}`)
+				const newsid = item.contentid,
+					nhref = `#/player?${toQuery({newsid: newsid})}`,
+					urlObj = {
+						path: 'player',
+						query: {
+							newsid: newsid
+						}
+					}
+				this.setVideoId(newsid)
+//				this.isIOS() && (window.location.href = nhref, location.reload())
+				this.isIOS() && (this.$router.push(urlObj), location.reload())
 				!this.isIOS() && this.activate()
 			}
 		}
@@ -37,17 +48,16 @@
 	.waterfall-item
 		display inline-block
 		position relative
-		margin-bottom .4rem
 		padding-right .13rem
 		-webkit-box-sizing border-box
 		box-sizing border-box
 		width 50%
-		height 3.8rem
+		height 4.3rem
+		vertical-align top
 		-webkit-transition all 1s ease-in-out
 		&:nth-child(2n)
 			padding-left .13rem
 			padding-right 0
-			/*float right*/
 		.video-avatar
 			width 100%
 			height 2.75rem

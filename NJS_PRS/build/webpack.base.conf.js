@@ -4,13 +4,6 @@ var utils = require('./utils')
 var webpack = require("webpack")
 var Jarvis = require("webpack-jarvis")
 var projectRoot = path.resolve(__dirname, '../')
-var env = process.env.NODE_ENV
-// check env & config/index.js to decide whether to enable CSS source maps for the
-// various preprocessor loaders added to vue-loader at the end of this file
-var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
-var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
-var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
-var adaptive = require('postcss-adaptive')
 
 function resolve(dir) {
 	return path.join(__dirname, '..', dir)
@@ -91,14 +84,6 @@ module.exports = {
 			}
 		]
 	},
-	vue: {
-		loaders: utils.cssLoaders({ sourceMap: useCssSourceMap }),
-		postcss: [
-			require('autoprefixer')({
-				browsers: ['last 2 versions']
-			})
-		]
-	},
 	plugins: [
 		new webpack.optimize.CommonsChunkPlugin('common.js'),
 		new webpack.ProvidePlugin({
@@ -109,8 +94,5 @@ module.exports = {
 		// new Jarvis({
 		// 	port: 1337
 		// })
-	],
-	postcss: function () {
-		return [adaptive({ remUnit: 72 })];
-	}
+	]
 }

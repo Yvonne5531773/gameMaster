@@ -206,7 +206,7 @@ export const appendQuery = (url, query) => {
 	return a.protocol + "//" + a.host + a.pathname + search + a.hash;
 }
 
-//$.request; $.hash
+//$.request; $.hash 针对hash结构
 /**
  * [request description]
  * @param  参数可以为空，此时返回请求参数Map本身
@@ -214,7 +214,7 @@ export const appendQuery = (url, query) => {
  * @return 根据参数不同，要返回不同的结果，object或者字符串
  */
 export const request = (paras) => {
-	var url = location.search;
+	var url = location.hash;
 	var paraString = url.substring(1).split("&");
 	var paraObj = {};
 	for (var i = 0, len=paraString.length; i < len; i++) {

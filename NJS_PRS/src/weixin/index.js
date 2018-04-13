@@ -3,8 +3,8 @@ import { worker } from 'api/worker'
 import { weixin } from '../config/index'
 import ua from '../ua/index'
 
-const webId = cookie('gm_webid') || '0',
-	videoData = getStore('VIDEO_DATA')
+const webId = cookie('gm_webid') || '0'
+let videoData = null
 
 function getShareLink () {
 	let domain = location.host;
@@ -12,48 +12,42 @@ function getShareLink () {
 	let url = [
 		location.protocol,
 		'//',
-		domain,
-		pathname,
+		location.host,
+		location.pathname,
 		location.search,
 		location.hash,
 	].join('');
 
-	if (!location.search) {
+	if (!location.hash) {
 		url = url + '?wxshare_count=2';
-	} else if (location.search.indexOf('wxshare_count=') === -1) {
-		url = url.replace(location.search, location.search + '&wxshare_count=2');
+	} else if (location.hash.indexOf('wxshare_count=') === -1) {
+		url = url.replace(location.hash, location.hash + '&wxshare_count=2');
 	} else {
 		let count = request('wxshare_count') || '0';
 		count = count ? parseInt(count) + 1 : 0;
 		url = url.replace('wxshare_count=' + request('wxshare_count'), 'wxshare_count=' + count);
 	}
-	url = url.replace('__tt_rbl=1&', '').replace('__tt_rbl=1', '');
-	let pbid = webId;
-	if (url.indexOf('pbid=') === -1) {
-		url += ('&pbid=' + pbid);
-	} else {
-		url = url.replace(/pbid=(\d+)/ig, 'pbid=' + pbid);
-	}
 	return url;
 }
 
 function getShareTitle () {
-	return videoData.title || ''
+	return videoData.title || '游戏超人'
 }
 
 function getShareImage () {
-	return videoData.poster || ''
+	return videoData.poster || 'http://act.cmcmcdn.com/upload/201804/774db3d4b455119129f7d0587ca8a5ff.png'
 }
 
 function getDescription () {
-	return videoData.description || ''
+	return videoData.description || '游戏超人邀请您'
 }
 
 function createNonceStr () {
 	return Math.random().toString(36).substr(2, 15)
 }
 
-async function init () {
+async function init (data) {
+	videoData = data
 	let wxconfig = {},
 		appid = weixin.appid,
 		nonceStr = createNonceStr(),
@@ -61,12 +55,12 @@ async function init () {
 		url = window.location.href,
 		debug = weixin.debug,
 		swapTitleInWX = weixin.swapTitleInWX,
-		callback = () => {
+		callback = (res) => {
 			//success callback
-			// console.log('success callback')
+			console.log('weixin success callback res', res)
 		}
 	if (ua.browser.weixin) {
-		const signatureUrl = "//open.snssdk.com/jssdk_signature/",
+		const signatureUrl = "",
 			data = {
 				appid: appid,
 				nonceStr: nonceStr,
@@ -89,7 +83,7 @@ async function init () {
 		pic: getShareImage(),
 		url: getShareLink(),
 		WXconfig: wxconfig,
-		callback: callback
+		// callback: callback
 	})
 }
 

@@ -8,10 +8,10 @@ export default [{
 	children: [
 		{
 			path: '',
-			redirect: '/index'
+			redirect: '/player'
 		},
 		{
-			path: '/index',
+			path: '/player',
 			component: index,
 		},
 	]

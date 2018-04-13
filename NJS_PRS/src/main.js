@@ -7,8 +7,8 @@ import store from './store'
 import VueRouter from 'vue-router'
 import VueLazyload from 'vue-lazyload'
 import _ from 'lodash'
-import { routerMode } from './config/index'
 import 'whatwg-fetch'
+import { routerMode } from './config/index'
 
 window._ = _
 Vue.use(components)

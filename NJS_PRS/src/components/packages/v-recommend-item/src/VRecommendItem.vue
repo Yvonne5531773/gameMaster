@@ -1,9 +1,11 @@
 <template>
 	<div class="recommend-item">
 		<div class="item-top">
-			<b class="item-top-left"></b>
-			<p class="item-title">{{title}}</p>
-			<span class="item-top-right" v-if="!isIOS()">{{$txt.TXT_9}}</span>
+			<div v-show="vm.data">
+				<b class="item-top-left"></b>
+				<p class="item-title">{{title}}</p>
+				<span class="item-top-right" v-if="!isIOS()">{{$txt.TXT_9}}</span>
+			</div>
 		</div>
 		<keep-alive>
 			<component v-if="vm.data" :is='current' :data="vm.data"></component>
@@ -17,6 +19,8 @@
 	import VRecyclist from './VRecyclist.vue'
 	import { urls } from 'config/index'
 	import { getBrowserName, toQuery } from 'utils/index'
+	import { recommends } from '../../../../mock/index'
+
 	export default {
 		name: 'VRecommendItem',
 		data () {
@@ -47,7 +51,7 @@
 			async init () {
 				const data = await this.fetchRecommendData()
 				_.forEach(data, this.dto)
-				this.vm.data = _.cloneDeep(data)
+				this.vm.data = _.cloneDeep(data).slice(0, 6)
 			},
 			async fetchRecommendData () {
 				const uuid = this.getId('uuid'),
@@ -67,6 +71,7 @@
 					console.log('recommend error', e)
 				}
 				return !_.isEmpty(recommendData)? recommendData.data:[]
+//				return recommends[0].data
 			},
 			dto (data) {
 				const avatar = !_.isEmpty(data.images)? data.images[0] : '',

@@ -17,40 +17,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <meta name="keywords" content="游戏超人" />
     <meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="apple-touch-icon-precomposed" href="./static/img/default.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./static/img/short_icon.png">
+    <!--<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">-->
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
-    <script type="text/javascript" src="static/js/share.js"></script>
-    <script>
-        (function (win, doc) {
-          var docEl = doc.documentElement;
-          function setRemUnit () {
-            var docWidth = docEl.clientWidth;
-            var rem = docWidth / 10;
-            docEl.style.fontSize = rem + 'px';
-          }
-          win.addEventListener('resize', function () {
-            setRemUnit();
-          }, false);
-          win.addEventListener('pageshow', function (e) {
-            if (e.persisted) {
-              setRemUnit();
-            }
-          }, false);
-          setRemUnit();
-          if (win.devicePixelRatio && win.devicePixelRatio >= 2) {
-            var testEl = doc.createElement('div');
-            var fakeBody = doc.createElement('body');
-            testEl.style.border = '0.5px solid transparent';
-            fakeBody.appendChild(testEl);
-            docEl.appendChild(fakeBody);
-            if (testEl.offsetHeight === 1) {
-              docEl.classList.add('hairlines');
-            }
-            docEl.removeChild(fakeBody);
-          }
-        }) (window, document)
-    </script>
+    <script type="text/javascript" src="./static/js/share.js"></script>
   </head>
   <style>
     html, body, div, span, applet, object, iframe,

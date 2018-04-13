@@ -40,7 +40,7 @@
 					first: true
 				}],
 				slides: null,
-				minWidth: 130,
+				minWidth: 30,
 				intervalTime: 3* 1000,
 				animationTime: .5* 1000,
 				itemStyle: ''
@@ -205,10 +205,11 @@
 			position fixed
 			width 100%
 			height 1.39rem
-			background-image linear-gradient(-90deg, #1D50FF 0%, #00C2FF 100%)
+			background-color #000
 			background-repeat no-repeat
 			background-position center bottom
 			background-size: 100% 100%
+			opacity .85
 			color #fff
 			.slider-container
 				position relative

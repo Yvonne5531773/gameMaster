@@ -13,7 +13,7 @@ export default class downloadApp {
 
 	init () {
 		if (ua.os.android) { //Android
-			if (ua.browser.weixin) {
+			if (ua.browser.weixin || ua.browser.qqbrowser) {
 				this.goMyapp(app.gm)
 			} else { // 安卓 非微信 调起应用宝
 				this.goMyappDownload()

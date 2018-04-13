@@ -7,27 +7,6 @@
 <script>
 	export default {
 		name: 'VRecommend',
-		data () {
-			return {
-				vm: {
-
-				},
-			}
-		},
-		props: {
-
-		},
-		created () {
-			this.init()
-		},
-		computed: {
-
-		},
-		methods: {
-			init () {
-
-			},
-		}
 	}
 </script>
 
